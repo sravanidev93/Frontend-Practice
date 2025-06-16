@@ -1,0 +1,38 @@
+
+:root{
+    --back-color:palevioletred;
+    --text-color:palegreen;
+ 
+}
+
+
+.darkStyles{
+    --back-color:#574646;
+    --text-color:#2a4cbb;
+}
+
+.lightStyles{
+    --back-color:#fff;
+    --text-color:rgb(95, 110, 110);
+}
+
+
+body{
+    background-color: var(--back-color);
+    color:var(--text-color);
+    transition:all 1s ease-in 0.5s 
+}
+
+
+button{
+    padding:8px;
+    border-radius: 5px;
+    background-color: rgb(48, 178, 201);
+    color: #ffebcd;
+    transition:transform 1s ease-in 10ms;
+
+}
+
+button:active{
+    transform:scale(0.5);
+}

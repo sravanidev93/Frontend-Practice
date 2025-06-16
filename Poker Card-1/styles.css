@@ -1,0 +1,60 @@
+.card {
+    position: relative;
+    width: 300px;
+    height: 350px;
+    background-color: white;
+    margin: 10% auto;
+    border-radius: 5%;
+    border: 1px solid black;
+    box-shadow: 0 15px 10px 10px whitesmoke;
+    padding: 5px;
+}
+
+
+#top-left::after {
+    content: "\2665";
+    color: rgb(255, 0, 0);
+    font-size: 65px;
+    position: absolute;
+    top: 5;
+    left: 10;
+}
+
+#top-right::before {
+    content: "\2665";
+    color: rgb(255, 0, 0);
+    font-size: 65px;
+    position: absolute;
+    top: 5;
+    right: 8;
+}
+
+#center{
+    width:5px;
+    height:5px;
+    color:red;
+    font-size: 65px;
+    position:absolute;
+    left:43%;
+    top:38%;
+    
+
+}
+
+#bottom-left::after {
+    content: "\2665";
+    color: rgb(255, 0, 0);
+    font-size: 65px;
+    position: absolute;
+    bottom: 5;
+    left: 8;
+}
+
+#bottom-right::before {
+    content: "\2665";
+    color: rgb(255, 0, 0);
+    font-size: 65px;
+    position: absolute;
+    bottom: 5;
+    right:8;
+}

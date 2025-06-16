@@ -1,0 +1,114 @@
+@media (min-width: 768px) {
+    .main {
+        width: 90%;
+        height: 150px;
+        padding: 20px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        font-size: large;
+        font-weight: 600;
+    }
+    #menuButton {
+        display: none;
+    }
+    #closeButton {
+        display: none;
+    }
+    .links nav ul {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+        gap: 100px;
+    }
+    .links nav ul li a {
+        margin-left: 50px;
+    }
+}
+
+
+@media (max-width: 915px) {
+
+    #menuButton {
+        display: block; 
+        position: absolute;
+        right:5%;      
+    }
+    #closeButton {
+        display: none;
+        position: absolute;
+        right:5%;
+    }
+    .main {
+        display: grid;
+        padding: 5%;
+        grid-template-columns: 1fr 1fr ;
+        box-sizing: border-box;
+     }
+    .links{
+        display: none;
+        width:90%;
+        text-align: left;
+    }
+
+    .links.active{
+        display:flex;
+        flex-direction: column;
+        width: 90%;
+    }
+    .links nav ul{
+        display: none;
+    }
+    .links.active nav ul{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 90%;
+    }
+}
+
+
+img {
+    width: 25px;
+    height: 25px;
+}
+.main {
+    width: 100%;
+    height: auto;
+    background-color: #f1ac3b;
+    position:sticky;
+    top:0;
+    z-index:5;
+    box-sizing: border-box;
+}
+.links nav ul li {
+    list-style: none;
+}
+.links nav ul li a {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content:space-between;
+    gap: 5px;
+    text-decoration: none;
+    color: black;
+}
+
+.links nav ul li a:hover{
+    background-color:fff;
+}
+
+.logo{
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    img{
+        width:50px;
+        height: 50px;
+    }  
+}
+

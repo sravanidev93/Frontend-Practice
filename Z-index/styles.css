@@ -1,0 +1,120 @@
+
+.parent{
+    width:400px;
+    height:400px;
+    background: white;
+    border:1px solid grey;
+    border-radius: 5px;
+    padding: 45px;
+    margin:100px auto ;
+    box-sizing: border-box;
+
+}
+
+
+
+.child-1{
+    width:50px;
+    height:50px;
+    background: hsl(24, 57%, 64%);
+    border:3px solid burlywood;
+    border-radius: 5px;
+    position:absolute;
+    padding: 30px;
+    box-sizing: border-box; 
+    z-index: 6; 
+    color: antiquewhite;  
+}
+
+.child-2{
+    width:100px;
+    height:100px;
+    background:rgb(14, 13, 13);
+    border:3px solid burlywood;
+    border-radius: 5px;
+    position:absolute;
+    padding:40px;
+    box-sizing: border-box;
+    z-index: 5;
+    color: antiquewhite;  
+
+    
+}
+
+.child-3{
+    width:150px;
+    height:150px;
+    background:rgb(207, 22, 124);
+    border:3px solid burlywood;
+    border-radius: 5px;
+    position:absolute;
+    padding:50px;
+    box-sizing: border-box;
+    z-index: 4;
+    color: antiquewhite;  
+
+    
+}.child-4{
+    width:200px;
+    height:200px;
+    background:#d9eb87;
+    border:3px solid burlywood;
+    border-radius: 5px;
+    position:absolute;
+    padding:60px;
+    box-sizing: border-box;
+    z-index: 3;
+    color: antiquewhite;  
+
+    
+}.child-5{
+    width:250px;
+    height:250px;
+    background:rgb(22, 245, 189);
+    border:3px solid burlywood;
+    border-radius: 5px;
+    position:absolute;
+    padding:70px;
+    box-sizing: border-box;
+    z-index: 2;
+    color: antiquewhite;  
+
+    
+}
+
+.child-6{
+    width:300px;
+    height:300px;
+    background:rgb(77, 53, 214);
+    border:3px solid burlywood;
+    border-radius: 5px;
+    position:absolute;
+    padding:80px;
+    box-sizing: border-box;
+    z-index: 1;
+    color: antiquewhite;  
+
+    
+}
+
+.box-text{
+    position: absolute;
+    bottom: 0;
+    right:0;
+    font-size: 25px;
+}
+
+
+.child-1:hover{
+    z-index: 10;
+}.child-2:hover{
+    z-index: 10;
+}.child-3:hover{
+    z-index: 10;
+}.child-4:hover{
+    z-index: 10;
+}.child-5:hover{
+    z-index: 10;
+}.child-6:hover{
+    z-index: 10;
+}

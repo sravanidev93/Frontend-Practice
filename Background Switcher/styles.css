@@ -1,0 +1,65 @@
+
+:root{
+    --back-color:#fff;
+    --text-color:hsl(230, 50%, 43%);
+}
+
+
+body{
+    margin-left:20%;
+    margin-top: 5%;
+    background-color: var(--back-color);
+
+}
+
+h1{
+    color:var(--head-color);
+    
+
+}
+
+
+section{ 
+    color:var(--text-color);
+}
+
+
+
+@media (prefers-color-scheme:light){
+     :root{
+        --back-color:#fff;
+        --text-color:rgb(230, 119, 220);
+        --head-color:rgb(52, 118, 241);
+    }
+    h1::after{
+        content:"Light theme applied";
+        background-color: #f5e2e2;
+        color:rgb(46, 20, 175);
+        font-size: medium;
+        margin-left:10px;
+        padding:10px;
+    }
+    
+
+} 
+
+
+@media (prefers-color-scheme:dark){
+    :root{
+        --back-color:#463e3e;
+        --text-color:hsl(0, 100%, 100%);
+        --head-color:rgb(207, 163, 19);
+    }
+    h1::after{
+        content:"Dark theme applied";
+        color:rgb(201, 49, 87);
+        font-size: medium;
+        margin-left:10px;
+        padding:10px;
+        background-color: bisque;
+    }
+    
+    
+} 
+
+

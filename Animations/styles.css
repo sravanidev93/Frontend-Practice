@@ -1,0 +1,148 @@
+.circle{
+    width:200px;
+    height:150px;
+    background-color: rgb(224, 117, 224);
+    margin-left:50px;
+    border-radius: 30%;
+    animation-name:blossom;
+    animation-duration: 2s;
+    animation-iteration-count: 10;
+    animation-timing-function: ease-in-out;
+    animation-delay:1ms;
+    margin-top: 100px;
+    animation-fill-mode: forwards;
+    transition:all 2s ease-out 1s;
+    transform: rotate(0deg);
+
+    
+}
+
+@keyframes blossom{
+    from{
+        background-color: rgb(247, 166, 18);
+        margin-left:50px;
+        border-radius: 30%;
+        transform: rotate(0deg);
+
+    }
+    to{
+        background-color: rgb(238, 44, 10);
+        margin-left:50px;
+        border-radius: 50%;
+        transform: rotate(360deg);
+
+    }
+}
+
+#box{
+    width:180px;
+    height:120px;
+    background-color:pink;
+    position:absolute;
+    left:40%;
+    top:100px;
+    animation-name:movement;
+    animation-delay:5ms;
+    animation-duration:10s;
+    animation-iteration-count:3;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+    animation-direction: alternate;
+    /* transform:rotate(30deg); */
+}
+
+@keyframes movement{
+    0%{
+        background-color:paleturquoise;
+        position:absolute;
+        left:40%;
+        top:10%;
+        /* transform:skewY(40deg);   */
+
+    }
+    25%{
+        background-color: blueviolet;
+        left:70%;
+        top:10%;  
+        /* transform:skewx(40deg);   */
+
+    }
+    50%{
+        background-color: palegreen;
+        left:70%;
+        top:50%;
+        /* transform: skewX(40deg); */
+    }
+    75%{
+        background-color: palevioletred;
+        left:40%;
+        top:50%;
+        /* transform:skewY(40deg);   */
+    }
+    100%{
+        background-color: palegoldenrod;
+        left:40%;
+        top:20%;
+        /* transform:skewX(50deg);   */
+
+    }
+}
+
+#container{
+    width:180px;
+    height:120px;
+    background-color:pink;
+    position:absolute;
+    left:7%;
+    top:500px;
+    animation-name: shapes;
+    animation-duration: 7s;
+    animation-delay: 2ms;
+    animation-timing-function: linear;
+    animation-fill-mode: alternate;
+    animation-direction: forwards;
+    animation-iteration-count: 1;
+
+}
+
+
+@keyframes shapes{
+    0%{
+        background-color:#1f2c3d;
+        transform: skewX(30deg);
+
+    }
+    25%{
+        background-color: #3c4dea;
+        transform:scale(1.5)
+
+
+
+    }
+    50%{
+        background-color: #4abbaa;
+
+
+        transform:scale(0.5)
+ 
+
+    }
+    75%{
+        background-color: #f7e6c3;
+        transform:rotate(60deg);  
+
+
+ 
+    }
+    100%{
+        background-color: #abcdab;
+        transform: skewX(70deg);
+
+
+
+
+       
+
+    }
+}
+
