@@ -82,15 +82,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const place = document.getElementById("Tourist-Place");
     const state = document.getElementById("state");
     const city = document.getElementById("city");
-    const inputElements=document.getElementsByTagName("input");
-    console.log(inputElements);
-    function clearValue(e){
-        e.target.value=""
-    }
+    // const inputElements=document.getElementsByTagName("input");
+    // console.log(inputElements);
+    // function clearValue(e){
+    //     e.target.value=""
+    // }
 
-    Object.entries(inputElements).forEach(([index,input])=>{
-                input.addEventListener("focus",clearValue);
-    })         
+    // Object.entries(inputElements).forEach(([index,input])=>{
+    //             input.addEventListener("focus",clearValue);
+    // })         
 
     function fillTourismDetails() {
         const destination = place.value;
@@ -141,6 +141,13 @@ document.addEventListener("DOMContentLoaded", () => {
     state.addEventListener("change", fillCities);
     fillOptions();
     fillStates();
+
+    const play=document.getElementById("play");
+
+    // if (play.value.match != /^[0-9]*$/){
+    //     console.log("enter valid");
+    // }
+
 })
 
 
