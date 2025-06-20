@@ -1,0 +1,107 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Form Handling</title>
+    <link href="styles.css" rel="stylesheet">
+</head>
+
+<body>
+    <script src="script.js"></script>
+
+    <main id="main">
+        <div id="section-1">
+            <div id="header">
+                <label for="Tourist-Place">Select your Tourist destination and fill your details to book tickets for
+                    free of cost</label><br>
+                <select id="Tourist-Place">
+                    <option></option>
+                </select>
+
+            </div>
+
+
+            <div class="details">
+                <img id="pic" src="images/7-wonders-of-the-world.webp">
+
+                <span id="cost"></span>>
+
+                <p id="location"></p>
+
+            </div>
+
+        </div>
+
+
+        <div id="section-2">
+
+            <form id="form" onclick="e.preventdefault()">
+            <!-- <form id="form" action="https://onlinenotepad.org/notepad"> -->
+
+                <div>
+                    <label for="name">Enter your name</label><br>
+                    <input type="text" value="enter your name..." name="name">
+
+                </div>
+                <div>
+                    <label for="email">Enter your email</label><br>
+                    <input type="email" value="@gmail.com" name="email">
+
+                </div>
+                <div>
+                    <label for="dob">Enter your date of birth</label><br>
+                    <input type="date" min="2023-01-01" value="2024-01-01" max="2025-02-02" name="dob">
+
+                </div>
+                <div>
+                    <label for="age">Enter your age</label><br>
+                    <input type="number" value="18" name="age">
+
+                </div>
+
+                <div>
+                    <label for="phone">Enter your phone</label><br>
+                    <input type="tel" value="" name="phone" placeholder="1234567890">
+
+                </div>
+
+                <div>
+                    <label for="vacation">Your selected tousist place</label><br>
+                    <input type="text" id="vacation" value="" name="vacation">
+
+                </div>
+
+                <div>
+                    <label for="state">Enter your State</label><br>
+                    <select id="state"></select>
+
+                </div>
+                <div>
+                    <label for="city">Enter your city</label><br>
+                    <select id="city">
+
+                    </select>
+                </div>
+
+                <div>
+                    <input type="submit" value="submit" name="age">
+
+                </div>
+                <div>
+                    <input type="reset" value="reset" name="age">
+
+                </div>
+
+        </div>
+
+
+
+        </form>
+
+    </main>
+
+</body>
+
+</html>
