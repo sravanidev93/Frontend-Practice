@@ -37,51 +37,54 @@ CITIES[32] = " Achhnera | Agra | Akbarpur | Aliganj | Aligarh | Allahabad | Ambe
 CITIES[33] = " Almora | Bageshwar | Bhatwari | Chakrata | Chamoli | Champawat | Dehradun | Deoprayag | Dharchula | Dunda | Haldwani | Haridwar | Joshimath | Karan Prayag | Kashipur | Khatima | Kichha | Lansdown | Munsiari | Mussoorie | Nainital | Pantnagar | Partapnagar | Pauri Garhwal | Pithoragarh | Purola | Rajgarh | Ranikhet | Roorkee | Rudraprayag | Tehri Garhwal | Udham Singh Nagar | Ukhimath | Uttarkashi ";
 CITIES[34] = " Adra | Alipurduar | Amlagora | Arambagh | Asansol | Balurghat | Bankura | Bardhaman | Basirhat | Berhampur | Bethuadahari | Birbhum | Birpara | Bishanpur | Bolpur | Bongoan | Bulbulchandi | Burdwan | Calcutta | Canning | Champadanga | Contai | Cooch Behar | Daimond Harbour | Dalkhola | Dantan | Darjeeling | Dhaniakhali | Dhuliyan | Dinajpur | Dinhata | Durgapur | Gangajalghati | Gangarampur | Ghatal | Guskara | Habra | Haldia | Harirampur | Harishchandrapur | Hooghly | Howrah | Islampur | Jagatballavpur | Jalpaiguri | Jhalda | Jhargram | Kakdwip | Kalchini | Kalimpong | Kalna | Kandi | Karimpur | Katwa | Kharagpur | Khatra | Krishnanagar | Mal Bazar | Malda | Manbazar | Mathabhanga | Medinipur | Mekhliganj | Mirzapur | Murshidabad | Nadia | Nagarakata | Nalhati | Nayagarh | Parganas | Purulia | Raiganj | Rampur Hat | Ranaghat | Seharabazar | Siliguri | Suri | Takipur | Tamluk";
 
-document.addEventListener("DOMContentLoaded", () => {
-    const SEVEN_WONDERS = {
-        "Great Wall of China": {
-            Location: "China",
-            Cost: "₹1.5 to ₹2L (INR) from India for 6 to 7 days",
-            img: "images/great_wall_of_china.jpg"
-        },
-        "Petra": {
-            Location: "Jordan",
-            Cost: "₹1.3L–₹1.8L (INR) from India for 5–6 days",
-            img: "images/petra.webp"
+const SEVEN_WONDERS = {
+    "Great Wall of China": {
+        Location: "China",
+        Cost: "₹1.5 to ₹2L (INR) from India for 6 to 7 days",
+        img: "images/great_wall_of_china.jpg"
+    },
+    "Petra": {
+        Location: "Jordan",
+        Cost: "₹1.3L–₹1.8L (INR) from India for 5–6 days",
+        img: "images/petra.webp"
 
-        },
-        "Christ the Reddemer": {
-            Location: "Rio de Janeiro, Brazil",
-            Cost: "₹2.5L–₹3L (INR) from India for 6–7 days",
-            img: "images/christ.jpg"
-        },
-        "Machu Picchu": {
-            Location: "Peru",
-            Cost: "₹2.8L–₹3.5L (INR) from India for 7 days",
-            img: "images/machu_pichu.jpg"
+    },
+    "Christ the Reddemer": {
+        Location: "Rio de Janeiro, Brazil",
+        Cost: "₹2.5L–₹3L (INR) from India for 6–7 days",
+        img: "images/christ.jpg"
+    },
+    "Machu Picchu": {
+        Location: "Peru",
+        Cost: "₹2.8L–₹3.5L (INR) from India for 7 days",
+        img: "images/machu_pichu.jpg"
 
-        },
-        "Chichen Itza": {
-            Location: "Mexico",
-            Cost: "₹2.3L–₹2.8L (INR) from India for 6–7 days",
-            img: "images/chichen_itza.webp"
-        },
-        "Roman Colosseum": {
-            Location: "Italy",
-            Cost: "₹1.8L–₹2.5L (INR) from India for 6–7 days",
-            img: "images/roman.jpg"
-        },
-        "Taj mahal": {
-            Location: "India",
-            Cost: "₹8,000–₹15,000 (INR) for a weekend trip (domestic)",
-            img: "images/taj.webp"
+    },
+    "Chichen Itza": {
+        Location: "Mexico",
+        Cost: "₹2.3L–₹2.8L (INR) from India for 6–7 days",
+        img: "images/chichen_itza.webp"
+    },
+    "Roman Colosseum": {
+        Location: "Italy",
+        Cost: "₹1.8L–₹2.5L (INR) from India for 6–7 days",
+        img: "images/roman.jpg"
+    },
+    "Taj mahal": {
+        Location: "India",
+        Cost: "₹8,000–₹15,000 (INR) for a weekend trip (domestic)",
+        img: "images/taj.webp"
 
-        }
     }
+}
 
+
+
+document.addEventListener("DOMContentLoaded", () => {
     const place = document.getElementById("Tourist-Place");
     const state = document.getElementById("state");
     const city = document.getElementById("city");
+
     // const inputElements=document.getElementsByTagName("input");
     // console.log(inputElements);
     // function clearValue(e){
@@ -90,13 +93,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Object.entries(inputElements).forEach(([index,input])=>{
     //             input.addEventListener("focus",clearValue);
-    // })         
+    // })  
+
+    const nameError = document.getElementById("nameError");
+    const emailError = document.getElementById("emailError");
+    const phoneError = document.getElementById("telError");
+    const dobError = document.getElementById("dobError");
+    const submitError = document.getElementById("submitError");
 
     function fillTourismDetails() {
         const destination = place.value;
         console.log(destination);
         console.log(document.getElementById("vacation"))
-        document.getElementById("vacation").value=destination;
+        document.getElementById("vacation").value = destination;
         document.getElementById("pic").src = SEVEN_WONDERS[destination].img;
         document.getElementById("cost").innerText = SEVEN_WONDERS[destination].Cost;
         document.getElementById("location").innerText = SEVEN_WONDERS[destination].Location;
@@ -128,11 +137,11 @@ document.addEventListener("DOMContentLoaded", () => {
     function fillCities() {
         city.options.length = 0;
         let selectedState = state.value;
-        let cityIndex=STATES.indexOf(selectedState);
+        let cityIndex = STATES.indexOf(selectedState);
         const cityList = CITIES[cityIndex].split("|");
-        for (let i = 0; i <cityList .length; i++) {
+        for (let i = 0; i < cityList.length; i++) {
             let cityName = cityList[i].trim();
-            let option=new Option(cityName,cityName);
+            let option = new Option(cityName, cityName);
             city.appendChild(option);
 
         }
@@ -142,11 +151,102 @@ document.addEventListener("DOMContentLoaded", () => {
     fillOptions();
     fillStates();
 
-    const play=document.getElementById("play");
+    const play = document.getElementById("play");
 
     // if (play.value.match != /^[0-9]*$/){
     //     console.log("enter valid");
     // }
+
+    function handleNameEntry(event) {
+        let value = event.target.value;
+        if (!value || value.length === 0) {
+            nameError.innerText = "Please enter your name!";
+            return false;
+        } else if (value && value.length < 3) {
+            nameError.innerText = "Name is too short!";
+            return false;
+        } else if (value && value.length > 25) {
+            nameError.innerText = "Name is too big";
+            return false;
+        } else {
+            nameError.innerText = "";
+            return true;
+        }
+
+    }
+
+    function handleEmailEntry(event) {
+        let value = event.target.value;
+        console.log(value);
+        if (!value || value.length === 0) {
+            emailError.innerText = "Please enter your email!";
+            return false;
+            // } else if (value && !value.match(/^[a-zA-Z@.0-9]+$/)) {
+        } else if (value && !value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+            emailError.innerText = "Enter valid email!";
+            return false;
+        } else {
+            emailError.innerText = "";
+            return true;
+        }
+
+    }
+
+    function handleDobEntry(eve) {
+        let value = eve.target.value;
+        const inputDate = new Date(value);
+        const today = new Date();
+        if (!value) {
+            dobError.innerText = "please provide your date of birth!";
+            return false;
+        }
+
+        else if (Date.parse(today) < Date.parse(inputDate)) {
+            dobError.innerText = "Future dates are not allowed!";
+            return false;
+        }
+        else if (today.getFullYear() - inputDate.getFullYear() < 3) {
+            dobError.innerText = "age less than 3 is restricted";
+            return false;
+        }
+        else {
+            dobError.innerText = "";
+            return true;
+        }
+    }
+
+    function handleTelEntry(eve) {
+        let value = eve.target.value;
+        console.log(value);
+        if (!value) {
+            phoneError.innerText = "Please enter your email!";
+            return false;
+        } else if (value && !value.match(/^[0-9]{10}$/)) {
+            phoneError.innerText = "Enter valid mobile number!";
+            return false;
+        } else if (value && (value.length != 10)) {
+            phoneError.innerText = "Enter valid mobile number!";
+            return false;
+        } else {
+            phoneError.innerText = "";
+            return true;
+        }
+    }
+
+    function handleFormSubmission(eve){
+        eve.preventdefault();
+        if(!handleNameEntry || !handleEmailEntry || handleDobEntry || handleTelEntry){
+           submitError.innerText="Please enter all fields";
+        }else{
+            alert("form submitted successfully");
+        }
+    }
+    document.getElementById("name").addEventListener("keyup", handleNameEntry);
+    document.getElementById("email").addEventListener("keyup", handleEmailEntry);
+    document.getElementById("dob").addEventListener("change", handleDobEntry)
+    document.getElementById("tel").addEventListener("keyup", handleTelEntry)
+    document.getElementById("form").addEventListener("submit",handleFormSubmission);
+
 
 })
 

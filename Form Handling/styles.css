@@ -90,3 +90,9 @@ img{
 
 }
 
+#nameError,#emailError,#dobError,#telError,#submitError{
+    margin-top: 15px;
+    font-size: medium;
+    font-weight: 100;
+    color:red;
+}
