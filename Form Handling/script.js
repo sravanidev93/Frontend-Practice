@@ -78,13 +78,10 @@ const SEVEN_WONDERS = {
     }
 }
 
-
-
 document.addEventListener("DOMContentLoaded", () => {
     const place = document.getElementById("Tourist-Place");
     const state = document.getElementById("state");
     const city = document.getElementById("city");
-
     // const inputElements=document.getElementsByTagName("input");
     // console.log(inputElements);
     // function clearValue(e){
@@ -115,7 +112,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function fillOptions() {
         let ind = 0;
-
         Object.keys(SEVEN_WONDERS).forEach((wonder) => {
             let option = new Option(wonder, wonder);
             place.options[ind] = option;
@@ -131,7 +127,6 @@ document.addEventListener("DOMContentLoaded", () => {
         for (let i = 0; i < STATES.length; i++) {
             let stateName = STATES[i];
             state.options[i] = new Option(stateName, stateName);
-
         }
     }
     function fillCities() {
@@ -143,7 +138,6 @@ document.addEventListener("DOMContentLoaded", () => {
             let cityName = cityList[i].trim();
             let option = new Option(cityName, cityName);
             city.appendChild(option);
-
         }
     }
 
@@ -246,8 +240,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("dob").addEventListener("change", handleDobEntry)
     document.getElementById("tel").addEventListener("keyup", handleTelEntry)
     document.getElementById("form").addEventListener("submit",handleFormSubmission);
-
-
 })
 
 
