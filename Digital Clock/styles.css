@@ -1,11 +1,15 @@
 #outer-box {
     margin: 100px auto;
     width: 300px;
-    height: 350px;
+    height: 330px;
     border: 2px solid black;
-    padding: 20px;
+    padding: 5px;
     box-sizing: border-box;
     border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .headings {
@@ -24,7 +28,7 @@
 #date,
 #time {
     width: 260px;
-    height: 100px;
+    height: 90px;
     background-color: black;
     border: 2px solid white;
     box-sizing: border-box;
@@ -34,11 +38,12 @@
     justify-content: center;
     font-size: 25px;
     border-radius: 5px;
+    margin-bottom: 10px;
 }
 
 #day {
     width: 260px;
-    height: 100px;
+    height: 80px;
     background-color: black;
     border: 2px solid white;
     color: white;
