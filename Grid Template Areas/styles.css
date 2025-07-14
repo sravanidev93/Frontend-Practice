@@ -1,0 +1,31 @@
+#web-page {
+    display: grid;
+    grid-template-rows: repeat(4, minmax(250px, 0.3fr));
+    grid-template-columns: repeat(4, minmax(200px, 0.3fr));
+    grid-template-areas: 'header header header header'
+        'sidebar content content content'
+        'sidebar content content content'
+        'footer footer footer footer'
+
+    ;
+}
+
+#header {
+    background-color: palegreen;
+    grid-area: header;
+}
+
+#sidebar {
+    background-color: aquamarine;
+    grid-area: sidebar;
+}
+
+#main-content {
+    background-color: palevioletred;
+    grid-area: content;
+}
+
+#footer {
+    background-color: bisque;
+    grid-area: footer;
+}
