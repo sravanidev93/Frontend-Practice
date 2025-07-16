@@ -1,0 +1,36 @@
+.parent-box{
+    display:grid;
+    grid-template-rows: [header-start ] 200px
+                        [header-end sidebar-start content-start] 500px
+                        [sidebar-end content-end footer-start] 200px
+                        [footer-end];
+                        
+   grid-template-columns: [header-start sidebar-start footer-start] 200px
+                           [sidebar-end content-start] 800px
+                           [content-end header-end footer-end];
+        
+}
+
+#header{
+    background-color: rgb(239, 213, 180);
+    grid-row:header-start/header-end;
+    grid-column:header-start/header-end;
+}
+#sidebar{
+    background-color: palegreen;
+        grid-row:sidebar-start/sidebar-end;
+    grid-column:sidebar-start/sidebar-end;
+
+}
+#content{
+    background-color: palevioletred;
+        grid-row:content-start/content-end;
+    grid-column:content-start/content-end;
+
+}
+#footer{
+    background-color: powderblue;
+        grid-row:footer-start/footer-end;
+    grid-column:footer-start/footer-end;
+
+}

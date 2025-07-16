@@ -1,0 +1,20 @@
+.grid-box {
+    height: 800px;
+    display: grid;
+    grid-template-columns: repeat(2, 100px 200px);
+    grid-template-rows: repeat(2, 100px 200px);
+    gap: 10px;
+    border: 2px solid black;
+    padding: 15px;
+    grid-auto-flow: column;
+    align-content:center;
+    justify-content: center;
+    /* align-items: start;
+    justify-items: center; */
+    background-color: palegreen;
+}
+
+section {
+    background-color: palevioletred;
+
+}
