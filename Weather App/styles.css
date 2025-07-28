@@ -8,8 +8,10 @@
 
 * {
     font-family: Arial, Helvetica, sans-serif;
-    border-radius: 5px;
+    border-radius: 8px;
     font-weight: 600;
+    
+
 }
 
 :root {
@@ -20,29 +22,34 @@
 #main {
     width: 400px;
     display: grid;
+    
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(4, auto);
     grid-template-areas: "current current"
         "hourly hourly"
         "sixday sixday"
         "feelslike humidity";
-    border: 1px solid black;
+    border: 3px solid rgb(126, 121, 121);
     gap: var(--spacing-small);
-    border-radius: 5px;
-    margin: 30px auto;
+    margin: 15px auto;
     padding: var(--spacing-medium);
-    box-shadow: 2px 2px 5px 3px gray;
+    box-shadow: 2px 2px 5px 3px rgb(220, 216, 216);
 
 
 }
 
 #main>section {
     text-align: center;
-    border: 1px solid;
+    border: 2px solid rgb(130, 122, 122);
     padding: var(--spacing-medium);
     box-sizing: border-box;
     box-shadow: 3px 5px 8px 5px gray;
 
+
+}
+
+img{
+        filter: drop-shadow(5px 5px 3px rgb(94, 97, 99));
 
 }
 
@@ -51,9 +58,11 @@
     width: 50px;
     height: 50px;
     object-fit: contain;
+        /* filter: drop-shadow(2px 3px 3px); */
+
 }
 
-.icon-description {
+.icon-description{
     height: 50px;
     display: flex;
     align-items: center;
@@ -61,6 +70,17 @@
     margin: 15px;
 
 }
+.CurrentMinMax {
+    /* height: 50px; */
+    width: auto;
+    display: flex;
+    /* align-items: center; */
+    justify-items: space-between;
+    gap: 25px;
+
+
+}
+
 
 
 #hourly-forecast #hourly-data {
@@ -138,3 +158,10 @@
 .min-temp {
     opacity: 50%;
 }
+
+#feels-like p,#humidity p{
+    opacity: 65%;
+    margin: 18px;
+    font-size: larger;
+}
+

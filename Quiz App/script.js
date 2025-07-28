@@ -198,30 +198,33 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function prevNextEnability() {
         if (CURRENT_SLIDE === 0) {
-            // prev.setAttribute("disabled","disabled");
-            // prev.innerText="None";
+            prev.setAttribute("disabled","disabled");
+            prev.innerText="None";
             // prev.style.display="none";
-            // next.removeAttribute("disabled");
-            // next.innerText="Next";
-            // next.style.display="block";
-            prev.style.visibility = "hidden";
+            next.removeAttribute("disabled");
+            next.innerText="Next";
+            next.style.display="block";
+            
+            // prev.style.visibility = "hidden";
         } else if (CURRENT_SLIDE === QUESTIONS.length - 1) {
-            // next.setAttribute("disabled","disabled");
-            // next.innerText="None";
-            // prev.removeAttribute("disabled");
-            // prev.innerText="Prev";
-            // prev.style.display="block";
+            next.setAttribute("disabled","disabled");
+            next.innerText="None";
+            prev.removeAttribute("disabled");
+            prev.innerText="Prev";
+            prev.style.display="block";
             // next.style.display="none";
-            next.style.visibility = "hidden";
+            
+            // next.style.visibility = "hidden";
         } else {
-            // next.removeAttribute("disabled");
-            // prev.removeAttribute("disabled");
-            // prev.innerText="Prev";
-            // next.innerText="Next";
-            // prev.style.display="block";
-            // next.style.display="block";
-            prev.style.visibility = "visible";
-            next.style.visibility = "visible";
+            next.removeAttribute("disabled");
+            prev.removeAttribute("disabled");
+            prev.innerText="Prev";
+            next.innerText="Next";
+            prev.style.display="block";
+            next.style.display="block";
+
+            // prev.style.visibility = "visible";
+            // next.style.visibility = "visible";
         }
     }
 

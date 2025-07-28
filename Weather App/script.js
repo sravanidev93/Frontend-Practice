@@ -92,9 +92,20 @@ async function buildCurrentForecast() {
 
     iconDescription.append(currentForecastIcon, DESCRIPTION);
 
-    const minMaxTemp = document.createElement("p");
+    const minMaxTemp = document.createElement("article");
 
-    minMaxTemp.innerText = `H: ${formatTemperature(temp_max)} L: ${formatTemperature(temp_min)}`;
+    minMaxTemp.classList.add("CurrentMinMax");
+
+    const maxTemp = document.createElement("p");
+
+    maxTemp.innerText = `H: ${formatTemperature(temp_max)}`;
+
+    const minTemp = document.createElement("p");
+
+    minTemp.innerText = `L: ${formatTemperature(temp_min)}`;
+    minTemp.classList.add("min-Temp");
+
+    minMaxTemp.append(maxTemp, minTemp);
 
 
     currentForecast.append(CITY_NAME, CURRENT_TEMP, iconDescription, minMaxTemp);
@@ -103,13 +114,14 @@ async function buildCurrentForecast() {
 
     const humidity = document.getElementById("humidity");
 
-    const humidityElement = document.createElement("h2");
+    const humidityElement = document.createElement("p");
     humidityElement.innerText = formatTemperature(humidityValue);
     humidity.append(humidityElement)
 
     const FEELS_LIKE_CONTAINER = document.getElementById("feels-like");
-    const feelsLikeElement = document.createElement("h2");
+    const feelsLikeElement = document.createElement("p");
     feelsLikeElement.innerText = `${feels_like_value}%`;
+
     FEELS_LIKE_CONTAINER.appendChild(feelsLikeElement);
 }
 
