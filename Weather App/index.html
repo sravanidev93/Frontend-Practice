@@ -9,6 +9,8 @@
     <script src="script.js"></script>
     <!-- <h1>Weather App</h1> -->
     <main id="main">
+        <input id="search" list="input-options" placeholder="Enter City Name here ....">
+        <datalist id="input-options"></datalist>
         <section id="current-forecast">
             <!-- <article class="current-data">
                 <h2 id="city-name">City Name</h2>
@@ -86,14 +88,14 @@
         </section>
         <section id="feels-like">
             <h2>FeelsLike</h2>
-            <article>
+            <article id="feelsLikeValue">
                 <p id="feels-like"></p>
             </article>
 
         </section>
         <section id="humidity">
             <h2>Humidity</h2>
-            <article>
+            <article id="humidity-value">
                 <p id="humidity-value"></p>
             </article>
 

@@ -1,5 +1,7 @@
 
-const API_KEY = "5c783b9970f6e6524c954fe13de587b5";
+document.addEventListener("DOMContentLoaded",()=>{
+
+    const API_KEY = "5c783b9970f6e6524c954fe13de587b5";
 
 //https://api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}
 
@@ -18,7 +20,7 @@ const getDayName = (dateValue) => {
 
 getDayName("2024-08-17");
 
-console.log(getDayName("2024-08-17"))
+// console.log(getDayName("2024-08-17"))
 
 function getIconImage(code) {
     return `https://openweathermap.org/img/wn/${code}@2x.png`;
@@ -45,10 +47,10 @@ async function getHourlyForecast(city_name) {
 
 }
 
-async function buildCurrentForecast() {
-    const CURRENT_WEATHER_DATA = await getCurrentForecastData("Madanapalle");
+async function buildCurrentForecast(cityName) {
+    const CURRENT_WEATHER_DATA = await getCurrentForecastData(cityName);
 
-    console.log(CURRENT_WEATHER_DATA);
+    // console.log(CURRENT_WEATHER_DATA);
 
     let { name, main: { temp, temp_min, temp_max, feels_like: feels_like_value, humidity: humidityValue }, weather: [{ description, icon }] } = CURRENT_WEATHER_DATA;
 
@@ -64,6 +66,8 @@ async function buildCurrentForecast() {
 
 
     const currentForecastContainer = document.getElementById("current-forecast");
+
+    currentForecastContainer.innerHTML="";
 
     const currentForecast = document.createElement("section");
 
@@ -112,43 +116,47 @@ async function buildCurrentForecast() {
 
     currentForecastContainer.appendChild(currentForecast);
 
-    const humidity = document.getElementById("humidity");
+    const humidity = document.getElementById("humidity-value");
+    humidity.innerHTML="";
 
     const humidityElement = document.createElement("p");
+
     humidityElement.innerText = formatTemperature(humidityValue);
     humidity.append(humidityElement)
 
-    const FEELS_LIKE_CONTAINER = document.getElementById("feels-like");
+    const FEELS_LIKE_CONTAINER = document.getElementById("feelsLikeValue");
+    FEELS_LIKE_CONTAINER.innerHTML="";
     const feelsLikeElement = document.createElement("p");
     feelsLikeElement.innerText = `${feels_like_value}%`;
 
     FEELS_LIKE_CONTAINER.appendChild(feelsLikeElement);
 }
 
-buildCurrentForecast();
+// buildCurrentForecast();
 
 
 function createSixDayForecast(HOURLY_FORECAST) {
     const FILTERED_SIX_DAY = Object.groupBy(HOURLY_FORECAST, (forecast) => getDayName((forecast.dt_txt).split(" ")[0]));
-    console.log(FILTERED_SIX_DAY);
+    // console.log(FILTERED_SIX_DAY);
 
     const SIXDAY_CONTAINER = document.getElementById("sixday-forecast");
+    SIXDAY_CONTAINER.innerHTML="";
 
     for (const day in FILTERED_SIX_DAY) {
         // console.log(FILTERED_SIX_DAY[day]);
 
-        console.log(day)
+        // console.log(day)
 
         const DAY_DATA = FILTERED_SIX_DAY[day];
         const TEMP_MIN = formatTemperature(Math.min(...Array.from(DAY_DATA, ({ main: { temp_min } }) => { return temp_min })));
-        console.log(day, TEMP_MIN);
+        // console.log(day, TEMP_MIN);
 
         const TEMP_MAX = formatTemperature(Math.max(...Array.from(DAY_DATA, ({ main: { temp_max } }) => { return temp_max })));
-        console.log(day, TEMP_MAX);
+        // console.log(day, TEMP_MAX);
 
         const { weather: [{ icon }] } = DAY_DATA[1];
 
-        console.log(getIconImage(icon));
+        // console.log(getIconImage(icon));
 
         const SIXDAY_DATA = document.createElement("section");
 
@@ -187,8 +195,8 @@ function createSixDayForecast(HOURLY_FORECAST) {
 }
 
 
-async function buildHourlyForecast() {
-    const HOURLY_FORECAST = await getHourlyForecast("Madanapalle");
+async function buildHourlyForecast(cityName) {
+    const HOURLY_FORECAST = await getHourlyForecast(cityName);
 
     console.log(HOURLY_FORECAST.list);
 
@@ -213,6 +221,7 @@ async function buildHourlyForecast() {
 
     // </section>
     const HOURLY_DATA = document.getElementById("hourly-data");
+    HOURLY_DATA.innerHTML="";
 
 
     (HOURLY_FORECAST.list).map((data) => {
@@ -239,10 +248,81 @@ async function buildHourlyForecast() {
 
 
     });
-    createSixDayForecast(HOURLY_FORECAST.list);
+    // createSixDayForecast(HOURLY_FORECAST.list);
+    return HOURLY_FORECAST.list;
 
 
 }
 
-buildHourlyForecast()
+// buildHourlyForecast()
+
+
+
+
+function debounce(func,timeout=900){
+    let timer;
+    return (...args)=>{
+        clearTimeout(timer);
+        timer=setTimeout(()=>{
+            func.apply(this,args)
+        },timeout)
+    }
+}
+const searchElement=document.getElementById("search");
+
+console.log(searchElement)
+
+const datalistOptions=document.getElementById("input-options");
+
+const debounceSearch=debounce((event)=>onInput(event),1500);
+
+
+const getGeographCityData=async(cityName)=>{
+    const API_KEY = "5c783b9970f6e6524c954fe13de587b5";
+
+    const response=await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=${API_KEY}`);
+    let data=await response.json();
+    return data;
+
+}
+
+
+const onInput=async(event)=>{
+    let cityName=event.target.value;
+    const response=await getGeographCityData(cityName);
+    console.log(response);
+
+    let options="";
+
+    for({lat,lon,country,name,state} of response ){
+        options+=`<option data-coords=${JSON.stringify({lat},{lon})} value="${name},${state},${country}"><option>`
+    }
+    // console.log(options);
+    datalistOptions.innerHTML=options;
+
+}
+
+async function buildForecast(cityName){
+    await buildCurrentForecast(cityName);
+    const SIXDAY_DATA=await buildHourlyForecast(cityName);
+    createSixDayForecast(SIXDAY_DATA);
+}
+
+const onSelect=(event)=>{
+    console.log(event.target.value);
+    let selectedValue=event.target.value;
+    let cityName=selectedValue.split(",")[0];
+    console.log(cityName);
+    buildForecast(cityName)
+
+}
+
+searchElement.addEventListener("input",debounceSearch);
+
+searchElement.addEventListener("change",onSelect);
+
+// searchElement.addEventListener("change")
+
+
+})
 
