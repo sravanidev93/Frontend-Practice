@@ -117,7 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
              <img class="object-cover w-48 h-48" src="${firstPic}">
             </div>               
                 <h2  class=" text-yellow-400 text-lg text-shadow-lg">${name}</h2>
-                <p class="dark:text-white-900 text-shadow-md">${songArtists}</p>
+                <p class="dark:text-white-900 line-clamp-2 text-shadow-md">${songArtists}</p>
                 <audio controls>
                     <source src="${song_url}" type="audio/mp4">
                 </audio>
