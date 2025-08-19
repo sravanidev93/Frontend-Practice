@@ -111,15 +111,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
             songCard.setAttribute("song-id", id);
             console.log(song_url)
-            songCard.className = "dark:bg-slate-700 border rounded-lg bg-white p-6 box-border flex flex-col items-center gap-4 m-6 shadow-lg ";
+            songCard.className = "dark:bg-slate-900 bg-white dark:border-yellow-400  border-4 border-yellow-200 rounded-lg  p-6 box-border flex flex-col items-center gap-4 m-6 shadow-2xl shadow-yellow-200 dark:shadow-lg dark:shadow-yellow-200 ";
             songCard.innerHTML = `
-            <div class="w-full   flex flex-row content-center justify-center  ">
-             <img class="object-cover w-48 h-48" src="${firstPic}">
+            <div class="w-full flex flex-row content-center justify-center  ">
+             <img class="object-cover rounded-lg w-48 h-48 " src="${firstPic}">
             </div>               
                 <h2  class=" text-yellow-400 text-lg text-shadow-lg">${name}</h2>
-                <p class="dark:text-white-900 line-clamp-2 text-shadow-md">${songArtists}</p>
-                <audio controls>
-                    <source src="${song_url}" type="audio/mp4">
+                <p class="dark:text-gray-300 text-gray-700 line-clamp-2  font-sans text-shadow-md">${songArtists}</p>
+                <audio  class="w-full"  controls>
+                    <source src="${song_url}"type="audio/mp4">
                 </audio>
             `;
             main.appendChild(songCard);
