@@ -11,34 +11,25 @@
 <body class="dark:text-white dark:bg-slate-900 text-gray-950 bg-white font-serif cursor-pointer ">
   <script type="module" src="/src/main.js"></script>
   <div class="flex">
-    <aside class="max-[500px]:hidden h-screen lg:w-64 border-r-8 dark:border-gray-800 p-5 font-bold italic">
 
-      <h1 class="text-green-400 text-3xl mb-6">LetsChill</h1>
-      <!-- <nav class="text-xl flex flex-col gap-6 content-start justify-center ">
-        <a >
-          <href class="" src="">Home</href>
-        </a>
-        <a>
-          <href src="">Favourites</href>
-        </a>
-        <a>
-          <href src="">Now playing</href>
-        </a>
 
-      </nav> -->
-
-    </aside>
     <main class="h-screen w-full px-5 py-6 font-semibold">
-      <header class="flex flex-1 justify-between content-center gap-4 ">
+
+      <header class="sticky top-4 flex flex-1 justify-between  gap-4 ">
+
+      <h1 class="text-3xl font-extrabold font-sans text-green-400">LetsChill</h1>
+
         <input id="search" type="text"
           class="border sm:w-[250px] text-black  lg:w-[400px] rounded-md py-2 px-4 focus:ring-0 outline-none cursor-pointer"
           placeholder="Search Songs here...">
-        <button class="border-1 rounded-lg py-2 px-4 dark:bg-black bg-slate-250 dark:text-white text-black cursor-pointer">
+        <button
+          class="border-1 font-bold font-serif text-lg rounded-lg py-2 px-4 dark:bg-white bg-blue-300 dark:text-black text-white cursor-pointer">
           Light
         </button>
 
       </header>
-      <section id="songCards" class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 my-5 place-content-stretch cursor-pointer">
+      <section id="songCards"
+        class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 my-5 place-content-stretch cursor-pointer">
 
       </section>
 
@@ -48,13 +39,13 @@
         <div id="songInfo" class="flex-1 flex-col  content-start gap-4">
           <h2 class="text-lg font-sans font-bold" id="songTitle"></h2>
           <p id="songArtists" class="text-lg font-semibold line-clamp-1 truncate w-[500px]"></p>
-                    <button id="playPauseBtn"><img id="play-pause" src="src/icons/pause.svg" class="bg-white text-green-300 w-8 h-8 cursor-pointer"
-              >
+          <button id="playPauseBtn"><img id="play-pause" src="src/icons/pause.svg"
+              class="bg-white text-green-300 w-8 h-8 cursor-pointer">
           </button>
-          <input class="dark:bg-slate-800 dark:text-white w-full h-1 cursor-pointer" id="songProgressBar" type="range" min="0"
-            max="100">
-            
-            
+          <input class="dark:bg-slate-800 dark:text-white w-full h-1 cursor-pointer" id="songProgressBar" type="range"
+            min="0" max="100">
+
+
         </div>
 
 
