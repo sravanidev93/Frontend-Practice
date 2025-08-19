@@ -1,7 +1,8 @@
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    const API_KEY = import.meta.env.API_KEY;
+ 
+    const API_KEY ="5c783b9970f6e6524c954fe13de587b5";
 
 
     //https://api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}
