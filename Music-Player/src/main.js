@@ -32,6 +32,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let audioEl;
 
+    playPauseBtn.addEventListener("click", () => {
+        if(!audioEl){
+            return
+        }
+        else if (audioEl.paused) {
+            audioEl.play();
+            playPause.src = pauseIcon;
+        } else {
+            audioEl.pause();
+            playPause.src = playIcon;
+        }
+    })
+
     function buildSongInfo(songImageSrc, songName, artistsNames, songUrlSrc) {
         image.src = songImageSrc;
         title.innerText = songName;
@@ -43,15 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
         audioEl = new Audio(songUrlSrc);
         audioEl.play();
         playPause.src = pauseIcon;
-        playPauseBtn.addEventListener("click", () => {
-            if (audioEl.paused) {
-                audioEl.play();
-                playPause.src = pauseIcon;
-            } else {
-                audioEl.pause();
-                playPause.src = playIcon;
-            }
-        })
+
         console.log(playIcon, pauseIcon)
         audioEl.addEventListener("timeupdate", () => {
             progressbar.value = (audioEl.currentTime / audioEl.duration) * 100;
@@ -97,15 +102,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
             songCard.addEventListener("click", () => {
 
-                if (songInfo.classList.contains("hidden")) {
+                // if (songInfo.classList.contains("hidden")) {
                     songInfo.classList.remove("hidden");
                     songInfo.classList.add("flex");
                     buildSongInfo(firstPic, name, songArtists, song_url);
 
-                } else {
-                    songInfo.classList.remove("flex");
-                    songInfo.classList.add("hidden");
-                }
+                // } else {
+                //     songInfo.classList.remove("flex");
+                //     songInfo.classList.add("hidden");
+                // }
 
             })
 
