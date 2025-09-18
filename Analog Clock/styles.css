@@ -1,84 +1,144 @@
 #clock {
-    width: 300px;
-    height: 300px;
+    width: 350px;
+    height: 350px;
     border: 8px solid black;
     margin: 100px auto;
     border-radius: 50%;
     background-color: rgb(247, 158, 246);
     box-sizing: border-box;
 }
-#dot{
-    width:5px;
-    height:5px;
+
+/* #dot {
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
     background-color: rgb(135, 91, 138);
     position: relative;
-    left:50%;
-    top:120px;
+    left: 50%;
+    top: 120px;
     transform: translateX(-7px);
-    
-}
 
-.numbers span{
+} */
+
+.numbers span {
     position: relative;
-    display:inline-block;
-    font-size: large;
+    display: inline-block;
+    font-size: x-large;
+    width:20px;
+    height: 30px;
+    text-align: center;
+    border:0px solid black;
+    border-radius: 50%;
 }
 
-#three{
-    top:120px;
-    left:225px;
-    transform: translate(25px,13px);
+#one {
+    top: 18px;
+    left: 205px;
+}
+
+#two {
+    top: 56px;
+    left: 210px;
+    transform: translate(25px, 13px);
 
 }
 
-#six{
-    left:40%;
-    top:260px;
-    transform: translate(-16px,6px);
+#three {
+    top: 125px;
+    left: 210px;
+    transform: translate(25px, 13px);
 
 }
 
-#nine{
-    top:136px;
-    left:-40px;
+#four {
+    top: 205px;
+    left: 175px;
+    transform: translate(25px, 13px);
+
 }
 
+ #five {
+    top: 265px;
+    left: 105px;
+    transform: translate(25px, 13px);
 
-
-#twelve{
-    left:50%;
-    transform:translateX(-12px)
 }
 
-#hour{
-    width:2px;
-    height:65px;
-    border:2px solid rgb(18, 19, 18);
-    position:relative;
-    top:50px;
-    left:136px;
+#six {
+    left: 40px;
+    top: 300px;
+    transform: translate(-16px, 6px);
+
+}
+
+#seven {
+    top: 275px;
+    right: 110px;
+    transform: translate(25px, 13px);
+}
+
+#eight {
+    top: 220px;
+    right: 185px;
+    transform: translate(25px, 13px);
+
+}
+
+#nine {
+    top: 145px;
+    right: 200px;
+}
+
+ #ten {
+    top: 58px;
+    right: 225px;
+    transform: translate(25px, 13px);
+}
+
+#eleven {
+    top: 8px;
+    right: 205px;
+    transform: translate(25px, 13px);
+
+}  
+
+
+#twelve {
+    left: 50%;
+    transform: translateX(-12px)
+}
+
+#hour {
+    width: 5px;
+    height: 90px;
+    border: 2px solid rgb(18, 19, 18);
+    position: relative;
+    top: 45px;
+    left: 157px;
+    transform: rotate(360deg);
+    transform-origin: bottom;
+    background-color: black;
+    border-radius: 20px;
+}
+
+#second {
+    width: 4px;
+    height: 130px;
+    border: 2px solid black;
+    position: relative;
+    bottom: 90px;
+    left: 160px;
     transform: rotate(360deg);
     transform-origin: bottom;
 }
 
-#second{
-    width:2px;
-    height:110px;
-    border:2px solid rgb(85, 80, 80);
-    position:relative;
-    bottom:65px;
-    left:136px;
-    transform: rotate(360deg);
-    transform-origin: bottom;
-}
-#minute{
-    width:2px;
-    height:85px;
-    border:2px solid black;
-    position:relative;
-    left:136px;
-    bottom:154px;
+#minute {
+    width: 3px;
+    height: 105px;
+    border: 2px solid black;
+    position: relative;
+    left: 160px;
+    bottom: 200px;
     transform: rotate(360deg);
     transform-origin: bottom;
 }
