@@ -4,8 +4,13 @@
     border: 8px solid black;
     margin: 50px auto;
     border-radius: 50%;
-    background-color: rgb(247, 158, 246);
+    background-color:rgb(250, 165, 179);
     box-sizing: border-box;
+    filter: drop-shadow(5px 15px 20px palevioletred);
+}
+
+body{
+    background-color: rgb(222, 245, 237);
 }
 
 /* #dot {
@@ -29,6 +34,8 @@
     text-align: center;
     border:0px solid black;
     border-radius: 50%;
+    color:white;
+    font-weight: 800;
 }
 
 #one {
@@ -124,7 +131,7 @@
 #second {
     width: 4px;
     height: 130px;
-    border: 2px solid black;
+    border: 2px solid red;
     position: relative;
     bottom: 90px;
     left: 160px;
@@ -135,7 +142,7 @@
 #minute {
     width: 3px;
     height: 105px;
-    border: 2px solid black;
+    border: 2px solid blue;
     position: relative;
     left: 160px;
     bottom: 200px;
