@@ -2,7 +2,8 @@ import './style.css';
 import playIcon from "./icons/play.svg";
 import pauseIcon from "./icons/pause.svg";
 
-const SONG_URL = "https://saavn.dev/api/search/songs";
+const SONG_URL = "https://saavn.sumit.co/api/search/songs";
+//curl 'https://saavn.sumit.co/api/search/songs?query=Believer&page=0&limit=10'
 const search = document.getElementById("search");
 const main = document.getElementById("songCards");
 const songInfo = document.getElementById("bottom");
