@@ -20,7 +20,7 @@ const muteBtn = document.getElementById("mute-btn");
 const muteHandle = document.getElementById("muteToggle");
 
 document.addEventListener("DOMContentLoaded", () => {
-    
+
     search.addEventListener("input", (event) => {
         debouncedSearch(event.target.value);
     });
@@ -50,7 +50,42 @@ document.addEventListener("DOMContentLoaded", () => {
             audioEl.pause();
             playPause.src = playIcon;
         }
-    })
+    });
+    function handleAudio() {
+        if (audioEl.volume > 0) {
+            lastVolume = audioEl.volume;
+            volumeSlider.value = 0;
+            audioEl.volume = 0;
+            muteHandle.src = unMuteIcon;
+        } else {
+
+            audioEl.volume = (lastVolume) ? lastVolume : 1;
+            volumeSlider.value = lastVolume * 100;
+            muteHandle.src = muteIcon;
+
+        }
+    }
+    volumeSlider.addEventListener("input", () => {
+        if (!audioEl) {
+            return;
+        }
+        audioEl.volume = (volumeSlider.value / 100);
+        lastVolume = audioEl.volume;
+    });
+
+    muteBtn.addEventListener("click", handleAudio);
+
+    function onTimeUpdate() {
+        progressbar.value = (audioEl.currentTime / audioEl.duration) * 100;
+    }
+
+    function onProgressChange() {
+        if (!audioEl) {
+            return
+        }
+        audioEl.currentTime = (progressbar.value / 100) * audioEl.duration;
+
+    }
 
     function buildSongInfo(songImageSrc, songName, artistsNames, songUrlSrc) {
         image.src = songImageSrc;
@@ -59,47 +94,20 @@ document.addEventListener("DOMContentLoaded", () => {
         songArtists.innerText = artistsNames;
         if (audioEl) {
             audioEl.pause();
-            lastVolume = audioEl.volume;
+            audioEl.removeEventListener("timeppdate", onTimeUpdate);
+            progressbar.removeEventListener("input", onProgressChange);
         }
         audioEl = new Audio(songUrlSrc);
         audioEl.play();
-        audioEl.volume = lastVolume;
-        volumeSlider.value = lastVolume * 100;
+
+        audioEl.volume = lastVolume ?? 1;
+        volumeSlider.value = audioEl.volume * 100;
 
         playPause.src = pauseIcon;
 
-        console.log(playIcon, pauseIcon)
-        audioEl.addEventListener("timeupdate", () => {
-            progressbar.value = (audioEl.currentTime / audioEl.duration) * 100;
-        });
-        progressbar.addEventListener("input", () => {
-            if (!audioEl) {
-                return
-            }
-            audioEl.currentTime = (progressbar.value / 100) * audioEl.duration;
-        });
-        volumeSlider.addEventListener("input", () => {
-            if (!audioEl) {
-                return;
-            }
-            audioEl.volume = (volumeSlider.value / 100);
-        });
-        function handleAudio() {
-            if (audioEl.volume > 0) {
-                lastVolume = audioEl.volume;
-                audioEl.volume = 0;
-                progressbar.value = 0;
-                muteHandle.src = muteIcon;
-            } else {
+        audioEl.addEventListener("timeupdate", onTimeUpdate);
+        progressbar.addEventListener("input", onProgressChange);
 
-                audioEl.volume = (lastVolume) ? lastVolume : 1;
-                progressbar.value = lastVolume * 100;
-                muteHandle.src = unMuteIcon;
-
-            }
-        }
-
-        muteBtn.addEventListener("click", handleAudio);
     }
 
     async function searchSongs(songName) {
