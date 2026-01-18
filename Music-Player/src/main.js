@@ -1,6 +1,8 @@
 import './style.css';
 import playIcon from "./icons/play.svg";
 import pauseIcon from "./icons/pause.svg";
+import muteIcon from "./icons/mute.svg";
+import unMuteIcon from "./icons/unmute.svg";
 
 const SONG_URL = "https://saavn.sumit.co/api/search/songs";
 //curl 'https://saavn.sumit.co/api/search/songs?query=Believer&page=0&limit=10'
@@ -13,14 +15,18 @@ const songArtists = document.getElementById("songArtists");
 const progressbar = document.getElementById("songProgressBar");
 const playPause = document.getElementById("play-pause");
 const playPauseBtn = document.getElementById("playPauseBtn");
+const volumeSlider = document.getElementById("volume-slider");
+const muteBtn = document.getElementById("mute-btn");
+const muteHandle = document.getElementById("muteToggle");
 
 document.addEventListener("DOMContentLoaded", () => {
-
+    
     search.addEventListener("input", (event) => {
         debouncedSearch(event.target.value);
-    })
+    });
+    let lastVolume;
 
-    function debounce(func, timeout = 900) {
+    function debounce(func, timeout = 500) {
         let timer;
         return function (...args) {
             clearTimeout(timer);
@@ -34,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let audioEl;
 
     playPauseBtn.addEventListener("click", () => {
-        if(!audioEl){
+        if (!audioEl) {
             return
         }
         else if (audioEl.paused) {
@@ -53,19 +59,47 @@ document.addEventListener("DOMContentLoaded", () => {
         songArtists.innerText = artistsNames;
         if (audioEl) {
             audioEl.pause();
+            lastVolume = audioEl.volume;
         }
         audioEl = new Audio(songUrlSrc);
         audioEl.play();
+        audioEl.volume = lastVolume;
+        volumeSlider.value = lastVolume * 100;
+
         playPause.src = pauseIcon;
 
         console.log(playIcon, pauseIcon)
         audioEl.addEventListener("timeupdate", () => {
             progressbar.value = (audioEl.currentTime / audioEl.duration) * 100;
-        })
+        });
         progressbar.addEventListener("input", () => {
-
+            if (!audioEl) {
+                return
+            }
             audioEl.currentTime = (progressbar.value / 100) * audioEl.duration;
-        })
+        });
+        volumeSlider.addEventListener("input", () => {
+            if (!audioEl) {
+                return;
+            }
+            audioEl.volume = (volumeSlider.value / 100);
+        });
+        function handleAudio() {
+            if (audioEl.volume > 0) {
+                lastVolume = audioEl.volume;
+                audioEl.volume = 0;
+                progressbar.value = 0;
+                muteHandle.src = muteIcon;
+            } else {
+
+                audioEl.volume = (lastVolume) ? lastVolume : 1;
+                progressbar.value = lastVolume * 100;
+                muteHandle.src = unMuteIcon;
+
+            }
+        }
+
+        muteBtn.addEventListener("click", handleAudio);
     }
 
     async function searchSongs(songName) {
@@ -74,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const result = await response.json();
         const data = result.data;
         const songsData = data.results;
-        // console.log(songsData);
+        console.log(data, songsData);
         main.innerHTML = "";
 
         for (const song of songsData) {
@@ -104,16 +138,17 @@ document.addEventListener("DOMContentLoaded", () => {
             songCard.addEventListener("click", () => {
 
                 // if (songInfo.classList.contains("hidden")) {
-                    songInfo.classList.remove("hidden");
-                    songInfo.classList.add("flex");
-                    buildSongInfo(firstPic, name, songArtists, song_url);
+                songInfo.classList.remove("hidden");
+                songInfo.classList.add("flex");
+                buildSongInfo(firstPic, name, songArtists, song_url);
 
                 // } else {
                 //     songInfo.classList.remove("flex");
                 //     songInfo.classList.add("hidden");
                 // }
 
-            })
+            });
+
 
             songCard.setAttribute("song-id", id);
             console.log(song_url)
@@ -132,6 +167,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
     }
-    const debouncedSearch = debounce(searchSongs, 900);
+    const debouncedSearch = debounce(searchSongs, 500);
 })
 
