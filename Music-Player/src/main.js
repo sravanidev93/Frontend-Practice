@@ -116,7 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const result = await response.json();
         const data = result.data;
         const songsData = data.results;
-        console.log(data, songsData);
+        // console.log(data, songsData);
         main.innerHTML = "";
 
         for (const song of songsData) {
@@ -159,7 +159,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
             songCard.setAttribute("song-id", id);
-            console.log(song_url)
+            // console.log(song_url)
             songCard.className = "dark:bg-slate-900 bg-white dark:border-yellow-400  border-4 border-yellow-200 rounded-lg  p-6 box-border flex flex-col items-center gap-4 m-6 shadow-2xl shadow-yellow-200 dark:shadow-lg dark:shadow-yellow-200 ";
             songCard.innerHTML = `
             <div class="w-full flex flex-row content-center justify-center  ">
