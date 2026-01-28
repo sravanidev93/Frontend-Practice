@@ -24,7 +24,8 @@ body {
     width: 400px;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-areas: "current current"
+    grid-template-areas: "search search"
+    "current current"
         "hourly hourly"
         "sixday sixday"
         "feels-like humidity";
@@ -54,6 +55,9 @@ body {
         description.innerText = desc;
         console.log(getImage(icon)); */
 
+#search{
+    grid-area: search;
+}
 
 #current-forecast {
     grid-area: current;

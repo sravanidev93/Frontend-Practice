@@ -2,8 +2,9 @@ const API_KEY = "45a5c701216211ef7aa04bba55f8c71b";
 
 const ENDPOINTS = {
     API_URL: "https://api.openweathermap.org/data/2.5/weather",
-    HOURLY_URL: "https://api.openweathermap.org/data/2.5/forecast"
+    HOURLY_URL: "https://api.openweathermap.org/data/2.5/forecast",
     // api.openweathermap.org/data/2.5/forecast?q={city name}&appid={API key}
+    COORDS_API_URL:"https://api.openweathermap.org/data/2.5/weather"
 }
 
 const formatTime = (dateTimeString) => {
@@ -20,9 +21,6 @@ const formatTime = (dateTimeString) => {
         result = (time <= 12) ?  time+" "+"AM" : (time - 12) +" " +"PM"
 
         }
-
-
-    
 
 
     return result;
@@ -52,9 +50,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const sixDayContainer = document.getElementById("fiveday-forecast");
 
-    const getCurrentForecast = async (cityName) => {
-        const response = await fetch(`${ENDPOINTS.API_URL}?q=${cityName}&appid=${API_KEY}&units=metric`);
-        console.log(`${ENDPOINTS.API_URL}?q=${cityName}&appid=${API_KEY}&units=metric`)
+    const getCurrentForecast = async ({latitude,longitude}) => {
+        let City="Madanapalle";
+        let response;
+        if(latitude&&longitude){
+            console.log(latitude,longitude);
+            console.log("calling using latitude and longitude coordinates")
+            response=await fetch(`${ENDPOINTS.COORDS_API_URL}?lat=${latitude}&lon=${longitude}&limit=5&appid=${API_KEY}&units=metric`)
+        }
+        else{
+            console.log(dl);
+
+            response = await fetch(`${ENDPOINTS.API_URL}?q=${City}&appid=${API_KEY}&units=metric`);
+        }
+
+        console.log(`${ENDPOINTS.API_URL}?q=${City}&appid=${API_KEY}&units=metric`)
         const data = await response.json();
         return data;
 
@@ -126,7 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const hourlyTime = document.createElement("h1");
             hourlyTime.classList.add("hourly-time");
             hourlyTime.innerText = formatTime(dt_txt);
-            console.log(formatTime(dt_txt))
+            // console.log(formatTime(dt_txt))
 
             const hourlyImage = document.createElement("img");
             hourlyImage.classList.add("hourly-icon");
@@ -164,7 +174,7 @@ document.addEventListener("DOMContentLoaded", () => {
             let minimum=Math.min(...minTemps);
             let maximum=Math.max(...maxTemps);
             const {weather:[{icon}]}=sixdayData[day][0];
-            console.log(day,minimum,maximum,icon);
+            // console.log(day,minimum,maximum,icon);
             dayWiseForecast.min_temp=minimum;
             dayWiseForecast.max_temp=maximum,
             dayWiseForecast.image_url=getImage(icon);
@@ -240,12 +250,13 @@ document.addEventListener("DOMContentLoaded", () => {
         return data;
     }
 
-    const loadData = async () => {
-        const currentData = await getCurrentForecast("madanapalle");
+    const loadData = async (data) => {
+        console.log("in load data",data);
+        const currentData = await getCurrentForecast(data);
         console.log(currentData);
         buildCurrentForecast(currentData)
         const hourlydata = await getHourlyForecast(currentData.name);
-        console.log(hourlydata);
+        // console.log(hourlydata);
         buildHourlyForecast(hourlydata);
         const fivedayData=await getFiveDayForecast(currentData.name);
         buildSixDayForecast(fivedayData.list);
@@ -255,10 +266,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     };
 
-    // const loadDatausingGeolocation=()=>{
-    //     navigator.geolocation.getCurrentPosition(({coords:{latitude,longitude}})=>console.log(latitude,longitude));
-    // }
-    // loadDatausingGeolocation();
-    loadData();
+    
+
+    const loadDatausingGeolocation=()=>{
+        navigator.geolocation.getCurrentPosition(({coords:{latitude,longitude}})=>{
+            console.log(latitude,longitude);
+            loadData({latitude,longitude});
+        }
+        );
+    }
+    loadDatausingGeolocation();
+
+
+    // loadData();
 
 })
