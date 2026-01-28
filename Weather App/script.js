@@ -8,27 +8,40 @@ const ENDPOINTS = {
 
 const formatTime = (dateTimeString) => {
     let timeString = dateTimeString.split(" ")[1];
-    let sepTime=timeString.split(":")[0];
+    let sepTime = timeString.split(":")[0];
 
-    let time=parseInt(sepTime,10);
+    let time = parseInt(sepTime, 10);
     let result;
-    if (time==12){
-        result=time+"PM"
-    }else{
-            result=(time<=12)?time+"AM":(time-12)+"PM"
+    if (time == 12) {
+        result = time + "PM"
+    } else if (time==0){
+            result="12"+" "+"AM"
+        }else{
+        result = (time <= 12) ?  time+" "+"AM" : (time - 12) +" " +"PM"
+
+        }
 
 
-    }
     
-    
-    return result ;
+
+
+    return result;
 }
+
+const getDay = (dateString) => {
+    const Days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"]
+    const date = new Date(dateString);
+    return Days[date.getDay()];
+
+}
+
+// getDay("2026-01-28")
 
 const formatTemperature = (tempVal) => `${tempVal.toFixed(1)}°C`;
 
 const getImage = (icon) => `https://openweathermap.org/img/wn/${icon}@2x.png`;
 
-https://api.openweathermap.org/data/2.5/weather?q=madanapalle&appid=45a5c701216211ef7aa04bba55f8c71b&units=metric
+// https://api.openweathermap.org/data/2.5/weather?q=madanapalle&appid=45a5c701216211ef7aa04bba55f8c71b&units=metric
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -36,6 +49,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // const container = document.getElementById("container");
     const currentSection = document.getElementById("current-forecast");
     const hourlyContainer = document.querySelector(".hourly-forecast-container");
+
+    const sixDayContainer = document.getElementById("fiveday-forecast");
 
     const getCurrentForecast = async (cityName) => {
         const response = await fetch(`${ENDPOINTS.API_URL}?q=${cityName}&appid=${API_KEY}&units=metric`);
@@ -63,16 +78,26 @@ document.addEventListener("DOMContentLoaded", () => {
         temperature.classList.add("temperature");
         temperature.innerText = formatTemperature(temp);
 
+
+        const icondescContainer=document.createElement("section");
+        icondescContainer.classList.add("icondescBox");
+
+        const currImage = document.createElement("img");
+        currImage.classList.add("current-icon");
+        currImage.src = getImage(icon);  
+
         const description = document.createElement("p");
         description.classList.add("description");
         description.innerText = desc;
         console.log(getImage(icon));
 
+        icondescContainer.append(currImage,description);
+
         const minMaxTemp = document.createElement("p");
         minMaxTemp.classList.add("minmax");
         minMaxTemp.innerText = `H:${formatTemperature(high)} L:${formatTemperature(low)}`;
 
-        currentForecast.append(heading, temperature, description, minMaxTemp);
+        currentForecast.append(heading, temperature, icondescContainer, minMaxTemp);
 
         currentSection.appendChild(currentForecast);
 
@@ -91,6 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
         //         </article>
         //     </section>
         // </article>
+
 
         for ({ icon, temp, dt_txt } of data12Hour) {
 
@@ -111,40 +137,128 @@ document.addEventListener("DOMContentLoaded", () => {
             hourlyTemp.innerText = formatTemperature(temp);
             // console.log(hourlyTemp, hourlyImage, hourlyTemp)
 
-
             hourly.append(hourlyTime, hourlyImage, hourlyTemp);
             hourlyContainer.appendChild(hourly);
-
-
         }
-
         // console.log(hourlyContainer, hourly)
+    }
+    const buildSixDayForecast = (hourlydata) => {
+        // console.log(hourlydata);
 
+        const sixdayData = Object.groupBy(hourlydata, (forecast) => getDay((forecast.dt_txt).split(" ")[0]))
+        console.log(sixdayData);
+
+        const sixdayForecast=[]
+
+        for (day in sixdayData){
+            let dayWiseForecast={}
+            let minTemps=[];
+            let maxTemps=[];
+
+            for (forecast of sixdayData[day]){
+                const {main:{temp_min,temp_max}}=forecast;
+                minTemps.push(temp_min);
+                maxTemps.push(temp_max)
+
+            }
+            let minimum=Math.min(...minTemps);
+            let maximum=Math.max(...maxTemps);
+            const {weather:[{icon}]}=sixdayData[day][0];
+            console.log(day,minimum,maximum,icon);
+            dayWiseForecast.min_temp=minimum;
+            dayWiseForecast.max_temp=maximum,
+            dayWiseForecast.image_url=getImage(icon);
+            sixdayForecast[day]=dayWiseForecast;
+
+
+        };
+
+        console.log(sixdayForecast);
+
+        const sixdayContainer = document.getElementById("sixday-forecast");
+
+
+        //     <section id="fiveday-forecast-container">
+        //         <article class="day-info">
+        //             <h2 class="day">Day</h2>
+        //             <p class="day-icon">icon</p>
+        //             <p class="min-temp">21.3 C</p>
+        //             <p class="max-temp">35.6 C</p>
+
+        //         </article>
+        //     </section>
+
+        for(day in sixdayForecast){
+            const sixday=document.createElement("article");
+            sixday.classList.add("day-info");
+
+            const heading=document.createElement("h2");
+            heading.classList.add("day");
+            heading.innerText=day;
+
+            const image=document.createElement("img");
+            image.classList.add("day-icon");
+            image.src=sixdayForecast[day].image_url;
+
+            const minTemperature=document.createElement("p");
+            minTemperature.classList.add("min-temp");
+            minTemperature.innerText=formatTemperature(sixdayForecast[day].min_temp);
+
+            const maxTemperature=document.createElement("p");
+            maxTemperature.classList.add("max-temp");
+            maxTemperature.innerText=formatTemperature(sixdayForecast[day].max_temp);
+            
+            sixday.append(heading,image,minTemperature,maxTemperature);
+            sixdayContainer.appendChild(sixday);
+        }
+    }
+
+    const buildHumidity=({main:{humidity}})=>{
+        const element=document.getElementById("humidity-value");
+        element.innerText=`${humidity}%`;
+
+    }
+
+    const buildFeelsLike=({main:{feels_like}})=>{
+        const element=document.getElementById("feelsLike-value");
+        element.innerText=formatTemperature(feels_like);
 
 
     }
 
-    const getHourlyForecast = async (cityName) => {
-        const response = await fetch(`${ENDPOINTS.HOURLY_URL}?q=${cityName}&appid=${API_KEY}&units=metric`);
-        const data = await response.json();
+    const getHourlyForecast = async(city) => {
+        const data=await getFiveDayForecast(city);
         return data.list.map((forecast) => {
             const { main: { temp }, weather: [{ icon }], dt_txt } = forecast;
             return { icon, temp, dt_txt };
         })
     }
 
+    const getFiveDayForecast = async (cityName) => {
+        const response = await fetch(`${ENDPOINTS.HOURLY_URL}?q=${cityName}&appid=${API_KEY}&units=metric`);
+        const data = await response.json();
+        return data;
+    }
+
     const loadData = async () => {
         const currentData = await getCurrentForecast("madanapalle");
         console.log(currentData);
         buildCurrentForecast(currentData)
-        const hourlydata = await getHourlyForecast("madanapalle");
-        // console.log(hourlydata);
-
+        const hourlydata = await getHourlyForecast(currentData.name);
+        console.log(hourlydata);
         buildHourlyForecast(hourlydata);
+        const fivedayData=await getFiveDayForecast(currentData.name);
+        buildSixDayForecast(fivedayData.list);
+        buildFeelsLike(currentData);
+        buildHumidity(currentData);
 
 
     };
 
+    // const loadDatausingGeolocation=()=>{
+    //     navigator.geolocation.getCurrentPosition(({coords:{latitude,longitude}})=>console.log(latitude,longitude));
+    // }
+    // loadDatausingGeolocation();
     loadData();
 
 })

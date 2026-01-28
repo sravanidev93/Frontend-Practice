@@ -26,7 +26,7 @@ body {
     grid-template-columns: repeat(2, 1fr);
     grid-template-areas: "current current"
         "hourly hourly"
-        "fiveday fiveday"
+        "sixday sixday"
         "feels-like humidity";
     border: 1px solid;
     border-radius: var(--spacing-medium);
@@ -42,6 +42,19 @@ body {
 
 }
 
+/* const icondescContainer=document.createElement("section");
+        icondescContainer.classList.add("icondescBox");
+
+        const currImage = document.createElement("img");
+        currImage.classList.add("current-icon");
+        currImage.src = getImage(icon);  
+
+        const description = document.createElement("p");
+        description.classList.add("description");
+        description.innerText = desc;
+        console.log(getImage(icon)); */
+
+
 #current-forecast {
     grid-area: current;
     display: grid;
@@ -51,13 +64,20 @@ body {
     place-items: center;
 }
 
-#current-forecast .description {
+.icondescBox{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+}
+#current-forecast .icondescBox .description {
     text-transform: capitalize;
     font-size: var(--font-regular);
 }
 
 #current-forecast .temperature {
-    font-size: var(--font-large);
+    margin: var(--spacing-medium);
+    font-size: var(--font-xl);
 
 }
 
@@ -111,7 +131,7 @@ body {
 }
 
 
-#hourly-forecast .hourly-forecast-container .hourly-info .hourly-icon {
+.icondescBox .current-icon,#hourly-forecast .hourly-forecast-container .hourly-info .hourly-icon ,#sixday-forecast .day-info .day-icon {
     width: 100px;
     height: 100px;
     object-fit: contain;
@@ -121,11 +141,41 @@ body {
     font-weight: var(--font-semibold);
     font-size: var(--font-regular);
 }
+        /* <article id="fiveday-forecast">
+            <h1>fiveday-forecast</h1>
+                <!-- <article class="day-info">
+                    <h2 class="day">Day</h2>
+                    <p class="day-icon">icon</p>
+                    <p class="min-temp">21.3 C</p>
+                    <p class="max-temp">35.6 C</p>
+                </article> -->
+        </article>
+ */
 
-
-#fiveday-forecast {
-    grid-area: fiveday;
+#sixday-forecast {
+    grid-area: sixday;
 }
+#sixday-forecast .day-info{
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-columns: repeat(4,1fr);
+    gap:var(--spacing-regular);
+    place-items: center;
+    place-content: center;
+}
+#sixday-forecast .day-info .day{
+    text-transform: capitalize;
+}
+#sixday-forecast .day-info .min-temp{
+    font-size: var(--font-regular);
+    font-weight: var(--font-semibold);
+    opacity: 0.5;
+}
+#sixday-forecast .day-info .max-temp{
+    font-size: var(--font-regular);
+    font-weight: var(--font-semibold);
+}
+
 
 #feels-like {
     grid-area: feels-like;
@@ -133,4 +183,21 @@ body {
 
 #humidity {
     grid-area: humidity;
+}
+#feels-like,#humidity{
+    display: flex;
+    flex-direction: column;
+    gap:var(--spacing-medium);
+    align-items: center;
+    justify-content: center;
+}
+#feels-like #feelsLike-value,#humidity #humidity-value{
+    font-size: var(--font-large);
+    font-weight: var(--font-semibold);
+    opacity:0.6;
+
+}
+
+@media screen {
+    
 }

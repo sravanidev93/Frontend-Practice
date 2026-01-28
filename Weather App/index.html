@@ -6,13 +6,19 @@
     <link href="styles.css" rel="stylesheet">
 </head>
 
+
+
+
 <body>
     <script src="script.js"></script>
     <main id="container">
         <article id="current-forecast">
             <!-- <h1>City Name</h1>
             <p class="temperature">temperature</p>
-            <p class="description">description</p>
+            <section class="icondescbox">
+                <img class="current-icon"></img>
+                <p class="description">description</p>
+            </section>
             <p class="min-max">Min Max temperatures</p> -->
         </article>
         <article id="hourly-forecast">
@@ -26,14 +32,24 @@
                 </article> -->
             </section>
         </article>
-        <article id="fiveday-forecast"> </article>
+        <article id="sixday-forecast">
+            <h1>Sixday Forecast</h1>
+                <!-- <article class="day-info">
+                    <h2 class="day">Day</h2>
+                    <p class="day-icon">icon</p>
+                    <p class="min-temp">21.3 C</p>
+                    <p class="max-temp">35.6 C</p>
+
+                </article> -->
+
+        </article>
         <article id="feels-like">
-            <h2>feels-like</h1>
-                <p>Temperature</p>
+            <h2>Feels like</h2>
+                <p id="feelsLike-value">Temperature</p>
         </article>
         <article id="humidity">
             <h2>Humidity</h1>
-                <p>Value %</p>
+                <p id="humidity-value">Value %</p>
         </article>
     </main>
 </body>
