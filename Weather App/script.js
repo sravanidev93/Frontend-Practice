@@ -89,7 +89,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const buildCurrentForecast = (data) => {
-        const { name, main: { temp, temp_min: low, temp_max: high }, weather: [{ description: desc, icon }] } = data;
+        console.log(data)
+        const { name, main: { temp, temp_min: low, temp_max: high }, sys: { country }, weather: [{ description: desc, icon }] } = data;
         console.log(name, low, high, desc, icon);
 
         const currentForecast = document.createElement("article");
@@ -101,7 +102,8 @@ document.addEventListener("DOMContentLoaded", () => {
         //     <p class="min-max">Min Max temperatures</p>
         // </article>
         const heading = document.createElement("h1");
-        heading.innerText = name;
+        console.log(`${name},${country}`)
+        heading.innerText = `${name},${country}`;
 
         const temperature = document.createElement("p");
         temperature.classList.add("temperature");
@@ -301,14 +303,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const onInput = async (event) => {
         console.log(event.target.value);
-        let city = event.target.value;
-        const result = await getCoordsByCityName(city);
+        let data = event.target.value;
+        const result = await getCoordsByCityName(data);
         console.log(result);
         const datalist = document.getElementById("cities");
         if (Array.isArray(result)) {
             let options = "";
             for (let { lat: latitude, lon: longitude, name, state, country } of result) {
-                // console.log(lat, lon, name, state, country);
+                console.log(latitude, longitude, name, state, country);
                 options += `<option data-coords=${JSON.stringify({ latitude, longitude })} value="${name}, ${state}, ${country}"></option> `
             }
             datalist.innerHTML = options;
@@ -329,21 +331,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const onSelect = (event) => {
         console.log(event);
-        const element = document.querySelector("datalist > option");
-        console.log(element);
-        const geoCords = JSON.parse(element.getAttribute("data-coords"));
-        console.log(geoCords);
-        if (geoCords) {
+        const inputValue = event.target.value;
+        const options = document.querySelectorAll("datalist option");
+        let selectedOption;
+
+        console.log(options);
+        for (const option of options) {
+            console.log(option, option.value)
+            if (option.value == inputValue) {
+                selectedOption = option;
+            }
+        }
+        if (!selectedOption) {
+            console.log("failed");
+            return
+        } else {
+            const geoCords = JSON.parse(selectedOption.getAttribute("data-coords"));
+            console.log("in select ", geoCords);
             loadData(geoCords)
+
+            
 
         }
 
 
-
-
-
-
     }
+
+
     const debounceSearch = debounce(event => onInput(event));
     const searchElement = document.getElementById("search");
     searchElement.addEventListener("input", debounceSearch);
@@ -355,8 +369,11 @@ document.addEventListener("DOMContentLoaded", () => {
         navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } }) => {
             console.log(latitude, longitude);
             loadData({ latitude, longitude });
-        }
-        );
+        },
+         ()=>{
+            alert("failed to fetch");
+            loadData({});
+         });
     }
     loadDatausingGeolocation();
     setColor()
