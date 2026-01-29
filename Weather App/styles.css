@@ -32,11 +32,8 @@ input:focus {
     outline: none;
 }
 
-
-
 .morning {
     background-color: rgb(249, 153, 118);
-
     color: rgb(53, 52, 52);
     border-color: rgb(237, 237, 161);
 }
@@ -45,21 +42,18 @@ input:focus {
     background-color: rgb(253, 253, 173);
     color: rgb(129, 123, 123);
     border-color: black;
-
 }
 
 .evening {
     background-color: rgb(198, 140, 104);
     color: white;
     border-color: rgb(26, 25, 25);
-
 }
 
 .night {
     background-color: rgb(1, 8, 22);
     color: rgb(255, 255, 255);
     border-color: rgb(242, 242, 234);
-
 }
 
 
@@ -77,14 +71,12 @@ input:focus {
     border-radius: var(--spacing-medium);
     padding: var(--spacing-regular);
     gap: var(--spacing-regular);
-
 }
 
 #container>article {
     padding: var(--spacing-regular);
     border: 1px solid var(--border-color);
     border-radius: var(--spacing-medium);
-
 }
 
 /* const icondescContainer=document.createElement("section");
@@ -131,24 +123,20 @@ input:focus {
 #current-forecast .temperature {
     margin: var(--spacing-medium);
     font-size: var(--font-xl);
-
 }
 
 #current-forecast .minmax {
     font-weight: var(--font-semibold);
     font-size: var(--font-regular);
-
 }
 
 #hourly-forecast {
     grid-area: hourly;
     text-align: center;
-
 }
 
 #hourly-forecast .hourly-forecast-container {
     margin-top: var(--spacing-regular);
-
 }
 
 /* //<article id="hourly-forecast">
@@ -170,7 +158,6 @@ input:focus {
     margin-bottom: var(--spacing-regular);
     overflow-x: auto;
     scrollbar-width: none;
-
 }
 
 #hourly-forecast .hourly-forecast-container .hourly-info {
@@ -251,7 +238,6 @@ input:focus {
 #humidity {
     display: grid;
     place-items: center;
-
 }
 
 #feels-like #feelsLike-value,
@@ -271,7 +257,6 @@ input:focus {
     body {
         display: grid;
     }
-
     #container {
         margin: var(--spacing-medium) auto;
         width: unset;
@@ -283,9 +268,5 @@ input:focus {
             "hourly hourly sixday sixday"
             "feels-like feels-like humidity humidity";
         border: 1px solid var(--border-color);
-
-
     }
-
-
 }
