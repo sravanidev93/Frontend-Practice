@@ -291,7 +291,7 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
             const geoCords = JSON.parse(selectedOption.getAttribute("data-coords"));
             console.log("in select ", geoCords);
-            loadData(geoCords);         
+            loadData(geoCords);
         }
     }
     const debounceSearch = debounce(event => onInput(event));
@@ -304,10 +304,10 @@ document.addEventListener("DOMContentLoaded", () => {
             // console.log(latitude, longitude);
             loadData({ latitude, longitude });
         },
-         ()=>{
-            alert("failed to fetch");
-            loadData({});
-         });
+            () => {
+                alert("failed to fetch");
+                loadData({});
+            });
     }
     loadDatausingGeolocation();
     setColor();
