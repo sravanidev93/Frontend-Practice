@@ -6,6 +6,7 @@
 
 body {
     font-family: Arial, Helvetica, sans-serif;
+    opacity: 0.9;
 
 }
 
@@ -17,19 +18,62 @@ body {
     --font-large: 2rem;
     --font-xl: 4rem;
     --font-semibold: 600;
+    --border-color: rgb(52, 51, 51);
+
 }
 
+input {
+    border: 1px solid var(--border-color);
+    outline: none;
+    opacity: 0.5;
+}
+
+input:focus {
+    outline: none;
+}
+
+
+
+.morning {
+    background-color: rgb(249, 153, 118);
+
+    color: rgb(53, 52, 52);
+    border-color: rgb(237, 237, 161);
+}
+
+.afternoon {
+    background-color: rgb(253, 253, 173);
+    color: rgb(129, 123, 123);
+    border-color: black;
+
+}
+
+.evening {
+    background-color: rgb(198, 140, 104);
+    color: white;
+    border-color: rgb(26, 25, 25);
+
+}
+
+.night {
+    background-color: rgb(1, 8, 22);
+    color: rgb(255, 255, 255);
+    border-color: rgb(242, 242, 234);
+
+}
+
+
 #container {
-    margin: auto;
+    margin: var(--spacing-medium) auto;
     width: 400px;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-areas: "search search"
-    "current current"
+        "current current"
         "hourly hourly"
         "sixday sixday"
         "feels-like humidity";
-    border: 1px solid;
+    border: 1px solid var(--border-color);
     border-radius: var(--spacing-medium);
     padding: var(--spacing-regular);
     gap: var(--spacing-regular);
@@ -38,7 +82,7 @@ body {
 
 #container>article {
     padding: var(--spacing-regular);
-    border: 1px solid rgb(97, 94, 92);
+    border: 1px solid var(--border-color);
     border-radius: var(--spacing-medium);
 
 }
@@ -55,8 +99,12 @@ body {
         description.innerText = desc;
         console.log(getImage(icon)); */
 
-#search{
+#search {
     grid-area: search;
+    padding: var(--spacing-regular);
+    border-radius: var(--spacing-medium);
+    font-size: var(--font-regular);
+    font-weight: var(--font-semibold);
 }
 
 #current-forecast {
@@ -68,12 +116,13 @@ body {
     place-items: center;
 }
 
-.icondescBox{
+.icondescBox {
     display: flex;
     align-items: center;
     justify-content: space-between;
 
 }
+
 #current-forecast .icondescBox .description {
     text-transform: capitalize;
     font-size: var(--font-regular);
@@ -90,9 +139,10 @@ body {
     font-size: var(--font-regular);
 
 }
-#hourly-forecast{
-        grid-area: hourly;
-        text-align: center;
+
+#hourly-forecast {
+    grid-area: hourly;
+    text-align: center;
 
 }
 
@@ -112,30 +162,33 @@ body {
         //     </section>
         // </article> */
 
-#hourly-forecast .hourly-forecast-container  {
+#hourly-forecast .hourly-forecast-container {
     display: grid;
     grid-auto-flow: column;
-    grid-template-columns: repeat(auto-fill,minmax(100px,1fr));
-    grid-auto-columns: minmax(100px,1fr);
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    grid-auto-columns: minmax(100px, 1fr);
     margin-bottom: var(--spacing-regular);
     overflow-x: auto;
+    scrollbar-width: none;
 
 }
 
-#hourly-forecast .hourly-forecast-container .hourly-info  {
+#hourly-forecast .hourly-forecast-container .hourly-info {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
-#hourly-forecast .hourly-forecast-container .hourly-info .hourly-time{
+#hourly-forecast .hourly-forecast-container .hourly-info .hourly-time {
     font-size: var(--font-regular);
     font-weight: var(--font-semibold);
 }
 
 
-.icondescBox .current-icon,#hourly-forecast .hourly-forecast-container .hourly-info .hourly-icon ,#sixday-forecast .day-info .day-icon {
+.icondescBox .current-icon,
+#hourly-forecast .hourly-forecast-container .hourly-info .hourly-icon,
+#sixday-forecast .day-info .day-icon {
     width: 100px;
     height: 100px;
     object-fit: contain;
@@ -145,7 +198,8 @@ body {
     font-weight: var(--font-semibold);
     font-size: var(--font-regular);
 }
-        /* <article id="fiveday-forecast">
+
+/* <article id="fiveday-forecast">
             <h1>fiveday-forecast</h1>
                 <!-- <article class="day-info">
                     <h2 class="day">Day</h2>
@@ -159,23 +213,27 @@ body {
 #sixday-forecast {
     grid-area: sixday;
 }
-#sixday-forecast .day-info{
+
+#sixday-forecast .day-info {
     display: grid;
     grid-template-columns: auto;
-    grid-template-columns: repeat(4,1fr);
-    gap:var(--spacing-regular);
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-regular);
     place-items: center;
     place-content: center;
 }
-#sixday-forecast .day-info .day{
+
+#sixday-forecast .day-info .day {
     text-transform: capitalize;
 }
-#sixday-forecast .day-info .min-temp{
+
+#sixday-forecast .day-info .min-temp {
     font-size: var(--font-regular);
     font-weight: var(--font-semibold);
     opacity: 0.5;
 }
-#sixday-forecast .day-info .max-temp{
+
+#sixday-forecast .day-info .max-temp {
     font-size: var(--font-regular);
     font-weight: var(--font-semibold);
 }
@@ -188,20 +246,46 @@ body {
 #humidity {
     grid-area: humidity;
 }
-#feels-like,#humidity{
-    display: flex;
-    flex-direction: column;
-    gap:var(--spacing-medium);
-    align-items: center;
-    justify-content: center;
+
+#feels-like,
+#humidity {
+    display: grid;
+    place-items: center;
+
 }
-#feels-like #feelsLike-value,#humidity #humidity-value{
+
+#feels-like #feelsLike-value,
+#humidity #humidity-value {
     font-size: var(--font-large);
     font-weight: var(--font-semibold);
-    opacity:0.6;
+    opacity: 0.6;
 
 }
 
-@media screen {
-    
+#feelsLike-value,
+#humidity-value {
+    margin: 0;
+}
+
+@media (width>=650px) {
+    body {
+        display: grid;
+    }
+
+    #container {
+        margin: var(--spacing-medium) auto;
+        width: unset;
+        max-width: 800px;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-areas: " search search search search"
+            "current current sixday sixday"
+            "hourly hourly sixday sixday"
+            "feels-like feels-like humidity humidity";
+        border: 1px solid var(--border-color);
+
+
+    }
+
+
 }

@@ -4,7 +4,8 @@ const ENDPOINTS = {
     API_URL: "https://api.openweathermap.org/data/2.5/weather",
     HOURLY_URL: "https://api.openweathermap.org/data/2.5/forecast",
     // api.openweathermap.org/data/2.5/forecast?q={city name}&appid={API key}
-    COORDS_API_URL:"https://api.openweathermap.org/data/2.5/weather"
+    COORDS_API_URL: "https://api.openweathermap.org/data/2.5/weather",
+    Direct_GEOCODING_URL: "http://api.openweathermap.org/geo/1.0/direct"
 }
 
 const formatTime = (dateTimeString) => {
@@ -15,12 +16,12 @@ const formatTime = (dateTimeString) => {
     let result;
     if (time == 12) {
         result = time + "PM"
-    } else if (time==0){
-            result="12"+" "+"AM"
-        }else{
-        result = (time <= 12) ?  time+" "+"AM" : (time - 12) +" " +"PM"
+    } else if (time == 0) {
+        result = "12" + " " + "AM"
+    } else {
+        result = (time <= 12) ? time + " " + "AM" : (time - 12) + " " + "PM"
 
-        }
+    }
 
 
     return result;
@@ -48,26 +49,43 @@ document.addEventListener("DOMContentLoaded", () => {
     const currentSection = document.getElementById("current-forecast");
     const hourlyContainer = document.querySelector(".hourly-forecast-container");
 
-    const sixDayContainer = document.getElementById("fiveday-forecast");
+    const sixDayContainer = document.getElementById("sixday-forecast");
 
-    const getCurrentForecast = async ({latitude,longitude}) => {
-        let City="Madanapalle";
+    const getCurrentForecast = async ({ latitude, longitude }) => {
+        let City = "Madanapalle";
         let response;
-        if(latitude&&longitude){
-            console.log(latitude,longitude);
+        if (latitude && longitude) {
+            // console.log(latitude,longitude);
             console.log("calling using latitude and longitude coordinates")
-            response=await fetch(`${ENDPOINTS.COORDS_API_URL}?lat=${latitude}&lon=${longitude}&limit=5&appid=${API_KEY}&units=metric`)
+            response = await fetch(`${ENDPOINTS.COORDS_API_URL}?lat=${latitude}&lon=${longitude}&limit=5&appid=${API_KEY}&units=metric`)
         }
-        else{
+        else {
             console.log(dl);
 
             response = await fetch(`${ENDPOINTS.API_URL}?q=${City}&appid=${API_KEY}&units=metric`);
         }
 
-        console.log(`${ENDPOINTS.API_URL}?q=${City}&appid=${API_KEY}&units=metric`)
+        // console.log(`${ENDPOINTS.API_URL}?q=${City}&appid=${API_KEY}&units=metric`)
         const data = await response.json();
         return data;
 
+    }
+
+    const setColor = () => {
+        const date = new Date();
+        const hour = date.getHours();
+        // const hour=13;
+        console.log(hour);
+        if (hour < 5 || hour > 18) {
+            document.body.classList.add("night");
+            document.getElementById("search").classList.add("night");
+        } else if (hour > 4 && hour < 10) {
+            document.body.classList.add("morning");
+        } else if (hour > 8 && hour < 16) {
+            document.body.classList.add("afternoon")
+        } else if (hour > 15 && hour < 19) {
+            document.body.classList.add("evening");
+        }
     }
 
     const buildCurrentForecast = (data) => {
@@ -75,6 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log(name, low, high, desc, icon);
 
         const currentForecast = document.createElement("article");
+        currentSection.innerHTML = "";
         //  <article id="current-forecast">
         //     <h1>City Name</h1>
         //     <p class="temperature">temperature</p>
@@ -89,19 +108,19 @@ document.addEventListener("DOMContentLoaded", () => {
         temperature.innerText = formatTemperature(temp);
 
 
-        const icondescContainer=document.createElement("section");
+        const icondescContainer = document.createElement("section");
         icondescContainer.classList.add("icondescBox");
 
         const currImage = document.createElement("img");
         currImage.classList.add("current-icon");
-        currImage.src = getImage(icon);  
+        currImage.src = getImage(icon);
 
         const description = document.createElement("p");
         description.classList.add("description");
         description.innerText = desc;
         console.log(getImage(icon));
 
-        icondescContainer.append(currImage,description);
+        icondescContainer.append(currImage, description);
 
         const minMaxTemp = document.createElement("p");
         minMaxTemp.classList.add("minmax");
@@ -115,6 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const buildHourlyForecast = async (data) => {
         const data12Hour = data.splice(1, 13);
+        hourlyContainer.innerHTML = "";
 
         //<article id="hourly-forecast">
         //     <section class="hourly-forecast-container">
@@ -154,38 +174,44 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     const buildSixDayForecast = (hourlydata) => {
         // console.log(hourlydata);
+        const sixdayContainer = document.getElementById("sixday-forecast");
+        sixDayContainer.innerHTML = "";
+        const heading = document.createElement("h1");
+        heading.innerText = "Six Day Forecast";
+        sixdayContainer.appendChild(heading);
+
+
 
         const sixdayData = Object.groupBy(hourlydata, (forecast) => getDay((forecast.dt_txt).split(" ")[0]))
-        console.log(sixdayData);
+        // console.log(sixdayData);
 
-        const sixdayForecast=[]
+        const sixdayForecast = []
 
-        for (day in sixdayData){
-            let dayWiseForecast={}
-            let minTemps=[];
-            let maxTemps=[];
+        for (day in sixdayData) {
+            let dayWiseForecast = {}
+            let minTemps = [];
+            let maxTemps = [];
 
-            for (forecast of sixdayData[day]){
-                const {main:{temp_min,temp_max}}=forecast;
+            for (forecast of sixdayData[day]) {
+                const { main: { temp_min, temp_max } } = forecast;
                 minTemps.push(temp_min);
                 maxTemps.push(temp_max)
 
             }
-            let minimum=Math.min(...minTemps);
-            let maximum=Math.max(...maxTemps);
-            const {weather:[{icon}]}=sixdayData[day][0];
+            let minimum = Math.min(...minTemps);
+            let maximum = Math.max(...maxTemps);
+            const { weather: [{ icon }] } = sixdayData[day][0];
             // console.log(day,minimum,maximum,icon);
-            dayWiseForecast.min_temp=minimum;
-            dayWiseForecast.max_temp=maximum,
-            dayWiseForecast.image_url=getImage(icon);
-            sixdayForecast[day]=dayWiseForecast;
+            dayWiseForecast.min_temp = minimum;
+            dayWiseForecast.max_temp = maximum,
+                dayWiseForecast.image_url = getImage(icon);
+            sixdayForecast[day] = dayWiseForecast;
 
 
         };
 
-        console.log(sixdayForecast);
+        // console.log(sixdayForecast);
 
-        const sixdayContainer = document.getElementById("sixday-forecast");
 
 
         //     <section id="fiveday-forecast-container">
@@ -198,46 +224,47 @@ document.addEventListener("DOMContentLoaded", () => {
         //         </article>
         //     </section>
 
-        for(day in sixdayForecast){
-            const sixday=document.createElement("article");
+        for (day in sixdayForecast) {
+            const sixday = document.createElement("article");
+
             sixday.classList.add("day-info");
 
-            const heading=document.createElement("h2");
+            const heading = document.createElement("h2");
             heading.classList.add("day");
-            heading.innerText=day;
+            heading.innerText = day;
 
-            const image=document.createElement("img");
+            const image = document.createElement("img");
             image.classList.add("day-icon");
-            image.src=sixdayForecast[day].image_url;
+            image.src = sixdayForecast[day].image_url;
 
-            const minTemperature=document.createElement("p");
+            const minTemperature = document.createElement("p");
             minTemperature.classList.add("min-temp");
-            minTemperature.innerText=formatTemperature(sixdayForecast[day].min_temp);
+            minTemperature.innerText = formatTemperature(sixdayForecast[day].min_temp);
 
-            const maxTemperature=document.createElement("p");
+            const maxTemperature = document.createElement("p");
             maxTemperature.classList.add("max-temp");
-            maxTemperature.innerText=formatTemperature(sixdayForecast[day].max_temp);
-            
-            sixday.append(heading,image,minTemperature,maxTemperature);
+            maxTemperature.innerText = formatTemperature(sixdayForecast[day].max_temp);
+
+            sixday.append(heading, image, minTemperature, maxTemperature);
             sixdayContainer.appendChild(sixday);
         }
     }
 
-    const buildHumidity=({main:{humidity}})=>{
-        const element=document.getElementById("humidity-value");
-        element.innerText=`${humidity}%`;
+    const buildHumidity = ({ main: { humidity } }) => {
+        const element = document.getElementById("humidity-value");
+        element.innerText = `${humidity}%`;
 
     }
 
-    const buildFeelsLike=({main:{feels_like}})=>{
-        const element=document.getElementById("feelsLike-value");
-        element.innerText=formatTemperature(feels_like);
+    const buildFeelsLike = ({ main: { feels_like } }) => {
+        const element = document.getElementById("feelsLike-value");
+        element.innerText = formatTemperature(feels_like);
 
 
     }
 
-    const getHourlyForecast = async(city) => {
-        const data=await getFiveDayForecast(city);
+    const getHourlyForecast = async (city) => {
+        const data = await getFiveDayForecast(city);
         return data.list.map((forecast) => {
             const { main: { temp }, weather: [{ icon }], dt_txt } = forecast;
             return { icon, temp, dt_txt };
@@ -251,14 +278,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const loadData = async (data) => {
-        console.log("in load data",data);
+        console.log("in load data", data);
         const currentData = await getCurrentForecast(data);
         console.log(currentData);
         buildCurrentForecast(currentData)
         const hourlydata = await getHourlyForecast(currentData.name);
         // console.log(hourlydata);
         buildHourlyForecast(hourlydata);
-        const fivedayData=await getFiveDayForecast(currentData.name);
+        const fivedayData = await getFiveDayForecast(currentData.name);
         buildSixDayForecast(fivedayData.list);
         buildFeelsLike(currentData);
         buildHumidity(currentData);
@@ -266,16 +293,73 @@ document.addEventListener("DOMContentLoaded", () => {
 
     };
 
-    
+    const getCoordsByCityName = async (city) => {
+        const response = await fetch(`${ENDPOINTS.Direct_GEOCODING_URL}?q=${city}&limit=5&appid=${API_KEY}`);
+        return response.json();
 
-    const loadDatausingGeolocation=()=>{
-        navigator.geolocation.getCurrentPosition(({coords:{latitude,longitude}})=>{
-            console.log(latitude,longitude);
-            loadData({latitude,longitude});
+    }
+
+    const onInput = async (event) => {
+        console.log(event.target.value);
+        let city = event.target.value;
+        const result = await getCoordsByCityName(city);
+        console.log(result);
+        const datalist = document.getElementById("cities");
+        if (Array.isArray(result)) {
+            let options = "";
+            for (let { lat: latitude, lon: longitude, name, state, country } of result) {
+                // console.log(lat, lon, name, state, country);
+                options += `<option data-coords=${JSON.stringify({ latitude, longitude })} value="${name}, ${state}, ${country}"></option> `
+            }
+            datalist.innerHTML = options;
+        }
+
+    }
+
+    function debounce(func, time = 800) {
+        let timer;
+        return function (...args) {
+            console.log("debounce called", timer)
+            clearTimeout(timer);
+            timer = setTimeout(() => {
+                func.apply(this, args);
+            }, time)
+        }
+    }
+
+    const onSelect = (event) => {
+        console.log(event);
+        const element = document.querySelector("datalist > option");
+        console.log(element);
+        const geoCords = JSON.parse(element.getAttribute("data-coords"));
+        console.log(geoCords);
+        if (geoCords) {
+            loadData(geoCords)
+
+        }
+
+
+
+
+
+
+    }
+    const debounceSearch = debounce(event => onInput(event));
+    const searchElement = document.getElementById("search");
+    searchElement.addEventListener("input", debounceSearch);
+    searchElement.addEventListener("change", onSelect)
+
+
+
+    function loadDatausingGeolocation() {
+        navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } }) => {
+            console.log(latitude, longitude);
+            loadData({ latitude, longitude });
         }
         );
     }
     loadDatausingGeolocation();
+    setColor()
 
 
     // loadData();

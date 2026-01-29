@@ -12,8 +12,8 @@
 <body>
     <script src="script.js"></script>
     <main id="container">
-        <input type="search" id="search" class="searchbox" list="cities">
-        <datalist id="cities">
+        <input type="search" placeholder="Enter the name of any City here" id="search" class="searchbox" list="cities">
+        <datalist class="datalist" id="cities">
 
         </datalist>
         <article id="current-forecast">
@@ -38,7 +38,7 @@
         </article>
         <article id="sixday-forecast">
             <h1>Sixday Forecast</h1>
-                <!-- <article class="day-info">
+            <!-- <article class="day-info">
                     <h2 class="day">Day</h2>
                     <p class="day-icon">icon</p>
                     <p class="min-temp">21.3 C</p>
@@ -48,12 +48,12 @@
 
         </article>
         <article id="feels-like">
-            <h2>Feels like</h2>
+            <h1>Feels like</h2>
                 <p id="feelsLike-value">Temperature</p>
         </article>
         <article id="humidity">
-            <h2>Humidity</h1>
-                <p id="humidity-value">Value %</p>
+            <h1>Humidity</h1>
+            <p id="humidity-value">Value %</p>
         </article>
     </main>
 </body>
