@@ -1,3 +1,4 @@
+const API_KEY = "45a5c701216211ef7aa04bba55f8c71b";
 
 const ENDPOINTS = {
     API_URL: "https://api.openweathermap.org/data/2.5/weather",
@@ -40,13 +41,11 @@ const getImage = (icon) => `https://openweathermap.org/img/wn/${icon}@2x.png`;
 
 document.addEventListener("DOMContentLoaded", () => {
     // const container = document.getElementById("container");
-
     const currentSection = document.getElementById("current-forecast");
     const hourlyContainer = document.querySelector(".hourly-forecast-container");
     const sixDayContainer = document.getElementById("sixday-forecast");
     const getCurrentForecast = async ({ latitude, longitude }) => {
         let City = "Madanapalle";
-        const API_KEY = process.env.API_KEY;
         let response;
         if (latitude && longitude) {
             // console.log(latitude,longitude);
@@ -222,7 +221,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const getFiveDayForecast = async (cityName) => {
-        const API_KEY = process.env.API_KEY;
         const response = await fetch(`${ENDPOINTS.HOURLY_URL}?q=${cityName}&appid=${API_KEY}&units=metric`);
         const data = await response.json();
         return data;
@@ -243,7 +241,6 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const getCoordsByCityName = async (city) => {
-        const API_KEY = process.env.API_KEY;
         const response = await fetch(`${ENDPOINTS.Direct_GEOCODING_URL}?q=${city}&limit=5&appid=${API_KEY}`);
         return response.json();
     }
