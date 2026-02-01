@@ -5,7 +5,7 @@ const ENDPOINTS = {
     HOURLY_URL: "https://api.openweathermap.org/data/2.5/forecast",
     // api.openweathermap.org/data/2.5/forecast?q={city name}&appid={API key}
     COORDS_API_URL: "https://api.openweathermap.org/data/2.5/weather",
-    Direct_GEOCODING_URL: "http://api.openweathermap.org/geo/1.0/direct"
+    Direct_GEOCODING_URL: "https://api.openweathermap.org/geo/1.0/direct"
 }
 
 const formatTime = (dateTimeString) => {
