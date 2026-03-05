@@ -18,13 +18,25 @@ const playPauseBtn = document.getElementById("playPauseBtn");
 const volumeSlider = document.getElementById("volume-slider");
 const muteBtn = document.getElementById("mute-btn");
 const muteHandle = document.getElementById("muteToggle");
+const prevBtn = document.getElementById("prev-btn");
+const nextBtn = document.getElementById("next-btn");
+const shuffleBtn = document.getElementById("shuffle-btn");
+const replayBtn = document.getElementById("replay-btn");
+const toggleTheme = document.getElementById("toggle-theme");
+const theme = document.getElementById("theme");
+const instructions = document.getElementById("instructions");
 
 document.addEventListener("DOMContentLoaded", () => {
+    document.documentElement.classList.add("dark");
+    theme.innerText = "Light";
 
     search.addEventListener("input", (event) => {
         debouncedSearch(event.target.value);
     });
     let lastVolume;
+    let audioEl;
+    let songList = [];
+    let currentSongIndex;
 
     function debounce(func, timeout = 500) {
         let timer;
@@ -37,7 +49,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-    let audioEl;
+    function handleToggleTheme() {
+        if (document.documentElement.classList.contains("dark")) {
+            document.documentElement.classList.remove("dark");
+            theme.innerText = "Dark";
+        } else {
+            document.documentElement.classList.add("dark");
+            theme.innerText = "Light";
+        }
+    }
 
     playPauseBtn.addEventListener("click", () => {
         if (!audioEl) {
@@ -65,6 +85,48 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
     }
+
+    function handleShuffle() {
+        console.log("clicked shuffle button");
+        if (songList) {
+            const random = Math.floor(Math.random() * songList.length);
+            const { firstPic, name, songArtists, song_url } = songList[random];
+            buildSongInfo(firstPic, name, songArtists, song_url);
+        }
+    }
+
+    function handleReplay() {
+        console.log("clicked replay button");
+        if (audioEl) {
+            audioEl.currentTime = 0;
+        }
+    }
+
+    function handlePrev() {
+        console.log("clicked previous button");
+        if (audioEl && currentSongIndex) {
+            currentSongIndex = (currentSongIndex - 1 + songList.length) % songList.length;
+            const { firstPic, name, songArtists, song_url } = songList[currentSongIndex];
+            // songInfo.innerHTML = "";
+            // if(currentSongIndex==0){
+
+            // }
+            buildSongInfo(firstPic, name, songArtists, song_url);
+        }
+    }
+
+    function handleNext() {
+        console.log("clicked next button");
+        if (audioEl && currentSongIndex) {
+            currentSongIndex = (currentSongIndex + 1) % songList.length;
+            const { firstPic, name, songArtists, song_url } = songList[currentSongIndex];
+
+            // songInfo.innerHTML = "";
+            buildSongInfo(firstPic, name, songArtists, song_url);
+        }
+
+    }
+
     volumeSlider.addEventListener("input", () => {
         if (!audioEl) {
             return;
@@ -72,9 +134,6 @@ document.addEventListener("DOMContentLoaded", () => {
         audioEl.volume = (volumeSlider.value / 100);
         lastVolume = audioEl.volume;
     });
-
-    muteBtn.addEventListener("click", handleAudio);
-
     function onTimeUpdate() {
         progressbar.value = (audioEl.currentTime / audioEl.duration) * 100;
     }
@@ -90,11 +149,11 @@ document.addEventListener("DOMContentLoaded", () => {
     function buildSongInfo(songImageSrc, songName, artistsNames, songUrlSrc) {
         image.src = songImageSrc;
         title.innerText = songName;
-        console.log(songArtists, artistsNames)
+        console.log(songArtists, artistsNames);
         songArtists.innerText = artistsNames;
         if (audioEl) {
             audioEl.pause();
-            audioEl.removeEventListener("timeppdate", onTimeUpdate);
+            audioEl.removeEventListener("timeupdate", onTimeUpdate);
             progressbar.removeEventListener("input", onProgressChange);
         }
         audioEl = new Audio(songUrlSrc);
@@ -107,7 +166,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         audioEl.addEventListener("timeupdate", onTimeUpdate);
         progressbar.addEventListener("input", onProgressChange);
-
     }
 
     async function searchSongs(songName) {
@@ -118,19 +176,16 @@ document.addEventListener("DOMContentLoaded", () => {
         const songsData = data.results;
         // console.log(data, songsData);
         main.innerHTML = "";
-
+        instructions.innerHTML = "";
+        songList = [];
         for (const song of songsData) {
             const { id, name, language, year } = song;
             // console.log(id, name, language, year);
             let songArtists = ""
             const { artists: { all: artistsNames }, image } = song;
-
             const firstPic = image[0]?.url;
-
             // const secondPic = image[1]?.url;
-
             // const thirdPic = image[2]?.url;
-
             const { downloadUrl } = song;
             let songElement = downloadUrl[downloadUrl.length - 1];
             const song_url = songElement.url;
@@ -141,13 +196,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 songArtists += " ";
             }
             // console.log(songArtists);
+            songList.push({
+                firstPic: firstPic,
+                name: name,
+                songArtists: songArtists,
+                song_url: song_url
+            })
             const songCard = document.createElement("section");
-
             songCard.addEventListener("click", () => {
-
                 // if (songInfo.classList.contains("hidden")) {
+                currentSongIndex = songList.findIndex(song => song.song_url == song_url);
                 songInfo.classList.remove("hidden");
                 songInfo.classList.add("flex");
+                console.log(songList)
                 buildSongInfo(firstPic, name, songArtists, song_url);
 
                 // } else {
@@ -156,8 +217,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 // }
 
             });
-
-
             songCard.setAttribute("song-id", id);
             // console.log(song_url)
             songCard.className = "dark:bg-slate-900 bg-white dark:border-yellow-400  border-4 border-yellow-200 rounded-lg  p-6 box-border flex flex-col items-center gap-4 m-6 shadow-2xl shadow-yellow-200 dark:shadow-lg dark:shadow-yellow-200 ";
@@ -173,8 +232,13 @@ document.addEventListener("DOMContentLoaded", () => {
             `;
             main.appendChild(songCard);
         }
-
     }
     const debouncedSearch = debounce(searchSongs, 500);
+    muteBtn.addEventListener("click", handleAudio);
+    prevBtn.addEventListener("click", handlePrev);
+    nextBtn.addEventListener("click", handleNext);
+    shuffleBtn.addEventListener("click", handleShuffle);
+    replayBtn.addEventListener("click", handleReplay);
+    toggleTheme.addEventListener("click", handleToggleTheme);
 })
 
