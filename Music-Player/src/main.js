@@ -176,7 +176,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const songsData = data.results;
         // console.log(data, songsData);
         main.innerHTML = "";
-        instructions.innerHTML = "";
+        instructions.classList.add("hidden");
         songList = [];
         for (const song of songsData) {
             const { id, name, language, year } = song;
