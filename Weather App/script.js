@@ -305,7 +305,7 @@ document.addEventListener("DOMContentLoaded", () => {
             loadData({ latitude, longitude });
         },
             () => {
-                alert("failed to fetch");
+                alert("Please allow location access");
                 loadData({});
             });
     }
